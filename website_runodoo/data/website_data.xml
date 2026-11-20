@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Brand assets of the default website: favicon (browser tab) and logo (default header on non-home pages).
+         Re-applied on every module upgrade. -->
+    <record id="website.default_website" model="website">
+        <field name="favicon" type="base64" file="website_runodoo/static/src/img/favicon.png"/>
+        <field name="logo" type="base64" file="website_runodoo/static/src/img/runodoo-logo.png"/>
+    </record>
+</odoo>

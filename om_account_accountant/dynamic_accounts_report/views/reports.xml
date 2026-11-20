@@ -1,0 +1,23 @@
+<odoo>
+    <record id="action_profit_loss" model="ir.actions.client"><field name="name">Profit and Loss</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'profit_loss'}"/></record>
+    <record id="accounting_pdf_reports.menu_account_report_pl" model="ir.ui.menu"><field name="action" ref="action_profit_loss"/></record>
+    <record id="action_balance_sheet" model="ir.actions.client"><field name="name">Balance Sheet</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'balance_sheet'}"/></record>
+    <record id="accounting_pdf_reports.menu_account_report_bs" model="ir.ui.menu"><field name="action" ref="action_balance_sheet"/></record>
+    <record id="action_general_ledger" model="ir.actions.client"><field name="name">General Ledger</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'general_ledger'}"/></record>
+    <record id="accounting_pdf_reports.menu_general_ledger" model="ir.ui.menu"><field name="action" ref="action_general_ledger"/></record>
+    <record id="action_trial_balance" model="ir.actions.client"><field name="name">Trial Balance</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'trial_balance'}"/></record>
+    <record id="accounting_pdf_reports.menu_general_balance_report" model="ir.ui.menu"><field name="action" ref="action_trial_balance"/></record>
+    <record id="action_partner_ledger" model="ir.actions.client"><field name="name">Partner Ledger</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'partner_ledger'}"/></record>
+    <record id="accounting_pdf_reports.menu_partner_ledger" model="ir.ui.menu"><field name="action" ref="action_partner_ledger"/></record>
+    <record id="action_aged_receivable" model="ir.actions.client"><field name="name">Aged Receivable</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'aged_receivable'}"/></record>
+    <record id="accounting_pdf_reports.menu_aged_receivable" model="ir.ui.menu"><field name="action" ref="action_aged_receivable"/></record>
+    <record id="action_aged_payable" model="ir.actions.client"><field name="name">Aged Payable</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'aged_payable'}"/></record>
+    <record id="accounting_pdf_reports.menu_aged_payable" model="ir.ui.menu"><field name="action" ref="action_aged_payable"/></record>
+    <record id="action_cash_book" model="ir.actions.client"><field name="name">Cash Book</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'cash_book'}"/></record>
+    <record id="om_account_daily_reports.menu_cashbook" model="ir.ui.menu"><field name="action" ref="action_cash_book"/></record>
+    <record id="action_bank_book" model="ir.actions.client"><field name="name">Bank Book</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'bank_book'}"/></record>
+    <record id="om_account_daily_reports.menu_bankbook" model="ir.ui.menu"><field name="action" ref="action_bank_book"/></record>
+    <record id="action_tax" model="ir.actions.client"><field name="name">Tax Report</field><field name="tag">dynamic_accounts_report.reports</field><field name="params" eval="{'report': 'tax'}"/></record>
+    <record id="accounting_pdf_reports.menu_account_report" model="ir.ui.menu"><field name="action" ref="action_tax"/></record>
+    <record id="accounting_pdf_reports.menu_aged_trial_balance" model="ir.ui.menu"><field name="name">Combined Aging (Advanced)</field></record>
+</odoo>

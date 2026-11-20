@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+access_dynamic_accounting_report,Dynamic accounting report,dynamic.accounting.report,account.group_account_readonly,crud,
+access_dynamic_accounting_report_billing,Dynamic partner report,dynamic.accounting.report,account.group_account_invoice,crud,

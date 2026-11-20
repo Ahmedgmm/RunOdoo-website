@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Generated from Data/mockups/home-calendly.html by Data/mockups/port_to_odoo.py — edit the mockup, then re-run. -->
+    <template id="homepage" inherit_id="website.homepage" name="Runodoo Home">
+        <xpath expr="//div[@id='wrap']" position="before">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+        </xpath>
+        <xpath expr="//div[@id='wrap']" position="replace">
+<t t-set="ro_trial" t-value="'https://app.runodoo.online/signup'"/>
+<t t-set="ro_support" t-value="'/contactus'"/>
+<div id="wrap" class="ro-home" data-ro-home="1">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"/>
+<header class="ro-nav">
+  <div class="ro-wrap ro-nav-row">
+    <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="34" height="34"/><span>Runodoo<em>.online</em></span></a>
+    <nav class="ro-nav-menu" aria-label="Main">
+      <a href="#ro-who">For business</a>
+      <a href="#ro-how">How it works</a>
+      <a href="#ro-dev">For developers</a>
+      <a href="#ro-faq">FAQ</a>
+    </nav>
+    <div class="ro-nav-cta">
+      <a class="ro-link" href="https://app.runodoo.online/login">Sign in</a>
+      <a class="ro-btn ro-btn-ink ro-btn-sm" t-att-href="ro_trial">Start free trial</a>
+    </div>
+  </div>
+  <div class="ro-progress" aria-hidden="true"><i></i></div>
+</header>
+
+<div id="ro-top">
+
+<section class="ro-hero">
+  <div class="ro-wrap ro-hero-grid">
+    <div class="ro-hero-copy">
+      <span class="ro-badge">Odoo hosting · 15 days free</span>
+      <h1>Your Odoo, hosted and <span class="ro-hl">looked after.</span></h1>
+      <p class="ro-lead">Fast, safe Odoo hosting with daily backups, a test copy for every change and Odoo experts when you need them. You run your business. We run the servers.</p>
+      <div class="ro-hero-btns">
+        <a class="ro-btn ro-btn-blue ro-btn-lg" t-att-href="ro_trial">Start 15-day free trial</a>
+        <a class="ro-btn ro-btn-line ro-btn-lg" t-att-href="ro_support">Book support</a>
+      </div>
+      <p class="ro-fine">No credit card needed. <a href="#ro-dev">Developer? Push a branch, get an Odoo →</a></p>
+    </div>
+
+    <div class="ro-hero-visual" aria-hidden="true">
+      <i class="ro-blob ro-blob-a"></i><i class="ro-blob ro-blob-b"></i>
+      <div class="ro-stage">
+        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png" alt=""/>
+        <canvas id="ro-gl-hero"></canvas>
+        <i class="ro-floor"></i>
+      </div>
+      <div class="ro-env-card">
+        <div class="ro-env-head">
+          <span class="ro-env-ic">S</span>
+          <div><b>shop</b><small>shop.runodoo.online</small></div>
+          <span class="ro-tag ro-tag-prod"><i class="ro-pulse"></i><span data-env-status="1">production</span></span>
+        </div>
+        <ul class="ro-env-rows">
+          <li data-i="0"><i class="ro-ok"></i><span>Running</span><em>Odoo 19 · 2 workers</em></li>
+          <li data-i="1"><i class="ro-ok"></i><span>Backed up</span><em>Today · 03:00</em></li>
+          <li data-i="2"><i class="ro-ok"></i><span>Online</span><em>99.9 % · watched 24/7</em></li>
+        </ul>
+        <div class="ro-env-foot">
+          <div><small>Requests / min</small><b data-live="1">128</b></div>
+          <svg class="ro-spark" viewBox="0 0 120 32" preserveAspectRatio="none"><path class="ro-spark-fill" d=""/><path class="ro-spark-line" d=""/></svg>
+        </div>
+      </div>
+      <div class="ro-chip ro-chip-a"><i class="ro-c-copy" data-chip-ic="1">⧉</i><div data-chip="1"><b>Update tested on a copy</b><small>Ready to go live</small></div></div>
+    </div>
+  </div>
+
+  <div class="ro-wrap ro-trust">
+    <p>Trusted by teams that run their business on Odoo <span class="ro-sample">sample logos</span></p>
+    <ul class="ro-logos">
+      <li><i>◆</i>Northwind</li><li><i>●</i>Bluefin</li><li><i>▲</i>Atlas Trading</li><li><i>■</i>Cedar &amp; Co</li><li><i>✦</i>Lumen Retail</li><li><i>◐</i>Orbit Foods</li>
+    </ul>
+  </div>
+
+  <div class="ro-wrap ro-stats">
+    <div class="ro-stat"><b><span data-count="15">15</span></b><span>days free to try it</span></div>
+    <div class="ro-stat"><b><span data-count="24">24</span>/7</b><span>watched around the clock</span></div>
+    <div class="ro-stat"><b><span data-count="1">1</span>×</b><span>backup every night, plus one before each update</span></div>
+    <div class="ro-stat"><b><span data-count="0" data-from="100">0</span>%</b><span>lock-in: download everything, any time</span></div>
+  </div>
+</section>
+
+<section id="ro-who" class="ro-sec">
+  <div class="ro-wrap">
+    <div class="ro-head">
+      <h2>Wherever you start, your Odoo is in good hands.</h2>
+      <p>Moving, starting fresh or working with a developer: the same calm hosting for all three.</p>
+    </div>
+    <div class="ro-who">
+      <article class="ro-card ro-who-card">
+        <span class="ro-who-ic ro-ic-mint"><svg viewBox="0 0 24 24"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg></span>
+        <h3>Already use Odoo?</h3>
+        <p>We move your database and files to Runodoo. Your users log in the next morning as usual.</p>
+        <a class="ro-more" t-att-href="ro_support">Plan your move →</a>
+      </article>
+      <article class="ro-card ro-who-card">
+        <span class="ro-who-ic ro-ic-cyan"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg></span>
+        <h3>New to Odoo?</h3>
+        <p>Start on a ready Odoo in minutes, try it free for 15 days, then grow at your own pace.</p>
+        <a class="ro-more" t-att-href="ro_trial">Start free →</a>
+      </article>
+      <article class="ro-card ro-who-card">
+        <span class="ro-who-ic ro-ic-violet"><svg viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg></span>
+        <h3>Your developer builds it?</h3>
+        <p>They work on test copies. You check every change on a private link before it reaches your team.</p>
+        <a class="ro-more" href="#ro-dev">For developers →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="ro-journey" class="ro-sec ro-sec-white">
+  <div class="ro-wrap">
+    <div class="ro-head">
+      <span class="ro-eyebrow ro-eyebrow-ink">From sign-up to peace of mind</span>
+      <h2>Built for businesses that run on Odoo</h2>
+      <p>Odoo moves your business forward. The work around it — servers, updates, backups — can slow you down. Runodoo handles it before, during and after every change.</p>
+      <a class="ro-btn ro-btn-ink" t-att-href="ro_trial">Start for free</a>
+    </div>
+    <div class="ro-jr" data-jr="1">
+      <article class="ro-jr-card ro-is-on" data-k="0" style="--g1:#7EF0C8;--g2:#4FC8E8">
+        <h3>Start</h3>
+        <p class="ro-jr-lead">Pick your Odoo version and apps. Your own Odoo is ready in minutes, free for 15 days.</p>
+        <ol class="ro-jr-steps">
+          <li><i style="--c:#7EF0C8">1</i>Choose Odoo 19</li>
+          <li><i style="--c:#4FC8E8">2</i>Pick Sales, Invoicing, Inventory</li>
+          <li><i style="--c:#8FA4F0">3</i>Open shop.runodoo.online</li>
+        </ol>
+        <div class="ro-jr-art"><div class="ro-jr-ui">
+          <div class="ro-ui-h"><span class="ro-ui-ic">S</span><div><b>Creating your Odoo</b><small>shop.runodoo.online</small></div></div>
+          <div class="ro-ui-bar"><span></span></div>
+          <div class="ro-ui-chips"><em>Database</em><em>Apps</em><em>HTTPS</em><em class="ro-go">Ready ✓</em></div>
+        </div></div>
+      </article>
+      <article class="ro-jr-card" data-k="1" style="--g1:#4FC8E8;--g2:#8FA4F0">
+        <h3>Test</h3>
+        <p class="ro-jr-lead">Try every change on a copy before your team sees it.</p>
+        <ol class="ro-jr-steps">
+          <li><i style="--c:#4FC8E8">1</i>A copy of your Odoo is made</li>
+          <li><i style="--c:#8FA4F0">2</i>Your developer pushes the update</li>
+          <li><i style="--c:#B28CF0">3</i>You check it on a private link</li>
+        </ol>
+        <div class="ro-jr-art"><div class="ro-jr-ui">
+          <div class="ro-ui-h"><span class="ro-ui-ic ro-ic2">⧉</span><div><b>Test copy</b><small>staging.shop.runodoo.online</small></div></div>
+          <p class="ro-ui-p">New invoice layout is ready for review.</p>
+          <div class="ro-ui-btns"><em>Open copy</em><em class="ro-go">Approve</em></div>
+        </div></div>
+      </article>
+      <article class="ro-jr-card" data-k="2" style="--g1:#8FA4F0;--g2:#B28CF0">
+        <h3>Go live</h3>
+        <p class="ro-jr-lead">One click moves the approved change to your live Odoo.</p>
+        <ol class="ro-jr-steps">
+          <li><i style="--c:#8FA4F0">1</i>Backup taken first</li>
+          <li><i style="--c:#B28CF0">2</i>Update applied in minutes</li>
+          <li><i style="--c:#7EF0C8">3</i>Your team keeps working</li>
+        </ol>
+        <div class="ro-jr-art"><div class="ro-jr-ui">
+          <div class="ro-ui-h"><span class="ro-ui-ic ro-ic3">↑</span><div><b>Live Odoo updated</b><small>Today · 14:12</small></div></div>
+          <div class="ro-ui-rows"><span><i class="ro-ok"></i>Backup before update</span><span><i class="ro-ok"></i>Modules upgraded</span><span><i class="ro-ok"></i>Online</span></div>
+        </div></div>
+      </article>
+      <article class="ro-jr-card" data-k="3" style="--g1:#B28CF0;--g2:#7EF0C8">
+        <h3>Stay safe</h3>
+        <p class="ro-jr-lead">Backups, monitoring and real Odoo experts when you need them.</p>
+        <ol class="ro-jr-steps">
+          <li><i style="--c:#B28CF0">1</i>Backup every night at 03:00</li>
+          <li><i style="--c:#7EF0C8">2</i>Watched around the clock</li>
+          <li><i style="--c:#4FC8E8">3</i>Book a 30-minute expert session</li>
+        </ol>
+        <div class="ro-jr-art"><div class="ro-jr-ui">
+          <div class="ro-ui-h"><span class="ro-ui-ic ro-ic4">?</span><div><b>Book support</b><small>30 min · video call</small></div></div>
+          <div class="ro-ui-btns ro-slots"><em>Tue 10:00</em><em class="ro-go">Tue 14:30</em><em>Wed 09:00</em></div>
+        </div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="ro-how" class="ro-sec ro-sec-white">
+  <div class="ro-wrap ro-feat">
+    <div class="ro-feat-copy">
+      <span class="ro-eyebrow">How it works</span>
+      <h2>Three layers. One calm Odoo.</h2>
+      <p class="ro-sub">The three layers in our logo are the three things we do for you, every day.</p>
+      <div class="ro-acc" data-acc="1">
+        <button class="ro-acc-item ro-is-on" data-i="0" type="button">
+          <span class="ro-acc-n">01</span>
+          <span class="ro-acc-t">Your Odoo<small>Your apps, data and custom modules in their own private space, on fast servers.</small></span>
+          <i class="ro-acc-bar"></i>
+        </button>
+        <button class="ro-acc-item" data-i="1" type="button">
+          <span class="ro-acc-n">02</span>
+          <span class="ro-acc-t">Kept safe<small>Automatic backups every day and before every update. Changes are tried on a copy first.</small></span>
+          <i class="ro-acc-bar"></i>
+        </button>
+        <button class="ro-acc-item" data-i="2" type="button">
+          <span class="ro-acc-n">03</span>
+          <span class="ro-acc-t">Always on<small>Watched around the clock, with e-mail that reaches your customers and help when you need it.</small></span>
+          <i class="ro-acc-bar"></i>
+        </button>
+      </div>
+    </div>
+    <div class="ro-feat-visual" aria-hidden="true">
+      <i class="ro-blob ro-blob-c"></i>
+      <div class="ro-how-stage"><canvas id="ro-gl-how"></canvas></div>
+      <div class="ro-pcard ro-how-card">
+        <div class="ro-pane ro-is-on" data-p="0">
+          <div class="ro-pc-head"><b>Your Odoo</b><span class="ro-tag ro-tag-prod">production</span></div>
+          <div class="ro-apps">
+            <span><i style="--c:#7EF0C8"></i>Sales</span><span><i style="--c:#4FC8E8"></i>Invoicing</span>
+            <span><i style="--c:#8FA4F0"></i>Inventory</span><span><i style="--c:#B28CF0"></i>Website</span>
+            <span><i style="--c:#4FC8E8"></i>CRM</span><span><i style="--c:#7EF0C8"></i>your_module</span>
+          </div>
+          <div class="ro-meter"><span>CPU</span><b style="--w:34%"></b></div>
+          <div class="ro-meter"><span>RAM</span><b style="--w:52%"></b></div>
+        </div>
+        <div class="ro-pane" data-p="1">
+          <div class="ro-pc-head"><b>Backups</b><span class="ro-muted">automatic</span></div>
+          <div class="ro-rows">
+            <div class="ro-row ro-new"><i class="ro-ok"></i>Today · 03:00<em>Database + files</em></div>
+            <div class="ro-row"><i class="ro-ok"></i>Before update · Tue 14:12<em>Database + files</em></div>
+            <div class="ro-row"><i class="ro-ok"></i>Mon · 03:00<em>Database + files</em></div>
+          </div>
+          <div class="ro-pair"><div><small>Live Odoo</small><b>Untouched</b></div><div class="ro-cp"><small>Test copy</small><b>Update applied</b></div></div>
+        </div>
+        <div class="ro-pane" data-p="2">
+          <div class="ro-pc-head"><b>Status</b><span class="ro-tag ro-tag-ok">all good</span></div>
+          <div class="ro-uptime"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="ro-uptime-l"><span>30 days ago</span><b>99.9 % online</b><span>today</span></p>
+          <div class="ro-rows">
+            <div class="ro-row"><i class="ro-ml">✉</i>Invoice INV/2026/0142<em class="ro-okt">Delivered</em></div>
+            <div class="ro-row"><i class="ro-ml">✉</i>Quotation S00087<em class="ro-okt">Delivered</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ro-peace" class="ro-sec">
+  <div class="ro-wrap">
+    <div class="ro-head">
+      <h2>The worrying parts, already taken care of.</h2>
+      <p>Backups, safe updates, your own data and e-mail that arrives. Built in, on every plan.</p>
+    </div>
+    <div class="ro-tiles">
+      <article class="ro-card ro-tile">
+        <div class="ro-mini">
+          <div class="ro-mini-head"><b>Backups</b><span>automatic</span></div>
+          <div class="ro-mini-rows ro-loop-rows">
+            <div class="ro-mr"><i class="ro-ok"></i>Today · 03:00</div>
+            <div class="ro-mr"><i class="ro-ok"></i>Before update · Tue</div>
+            <div class="ro-mr"><i class="ro-ok"></i>Mon · 03:00</div>
+          </div>
+        </div>
+        <h3>A backup every day</h3>
+        <p>And one more before every update. Encrypted, and restored in a few clicks.</p>
+      </article>
+      <article class="ro-card ro-tile">
+        <div class="ro-mini">
+          <div class="ro-mini-head"><b>New update</b><span class="ro-st">Testing on a copy…</span></div>
+          <div class="ro-mini-pair"><div><small>Live</small><b>Untouched</b></div><div class="ro-cp"><small>Copy</small><b>Applied</b></div></div>
+          <div class="ro-mini-bar"><span></span></div>
+        </div>
+        <h3>Try changes on a copy first</h3>
+        <p>Every update runs on a copy of your Odoo. Your team keeps working until it's approved.</p>
+      </article>
+      <article class="ro-card ro-tile">
+        <div class="ro-mini">
+          <div class="ro-mini-head"><b>Your data</b><span>always yours</span></div>
+          <div class="ro-mini-btn"><i>↓</i>Download full backup</div>
+          <div class="ro-mini-note">or run Runodoo on your own server</div>
+        </div>
+        <h3>Your data stays yours</h3>
+        <p>Download everything at any time, or keep it on your own server. No lock-in.</p>
+      </article>
+      <article class="ro-card ro-tile">
+        <div class="ro-mini">
+          <div class="ro-mini-head"><b>Outgoing e-mail</b><span>today</span></div>
+          <div class="ro-mini-rows">
+            <div class="ro-mr"><i class="ro-ml">✉</i>INV/2026/0142<em>Delivered</em></div>
+            <div class="ro-mr"><i class="ro-ml">✉</i>Quotation S00087<em>Delivered</em></div>
+            <div class="ro-mr"><i class="ro-ml">✉</i>Order confirmed<em>Delivered</em></div>
+          </div>
+        </div>
+        <h3>E-mails that arrive</h3>
+        <p>Invoices and quotes land in the inbox, not in spam. Test copies never e-mail real customers.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="ro-stories" class="ro-stories">
+  <div class="ro-wrap">
+    <div class="ro-head ro-head-light">
+      <span class="ro-eyebrow ro-eyebrow-light">Customer stories</span>
+      <h2>Real businesses. Calm Odoo.</h2>
+    </div>
+    <div class="ro-st" data-st="1">
+      <button class="ro-st-side ro-s-l2" type="button" data-go="-2" aria-label="Previous story"><i style="--a:#8FA4F0;--b:#B28CF0">R</i></button>
+      <button class="ro-st-side ro-s-l1" type="button" data-go="-1" aria-label="Previous story"><i style="--a:#4FC8E8;--b:#8FA4F0">D</i></button>
+      <div class="ro-st-card">
+        <div class="ro-st-slide ro-is-on">
+          <div class="ro-st-copy">
+            <span class="ro-sample">sample story</span>
+            <h3>Moved over one weekend, nothing lost</h3>
+            <blockquote>“We moved our Odoo on Friday. On Monday the team logged in as if nothing had happened.”</blockquote>
+            <p class="ro-st-who"><em>Owner</em><em>Retail shop, 12 users</em></p>
+          </div>
+          <div class="ro-st-art" style="--a:#7EF0C8;--b:#4FC8E8"><div class="ro-st-stat"><b>0</b><span>orders lost during the move</span></div></div>
+        </div>
+        <div class="ro-st-slide">
+          <div class="ro-st-copy">
+            <span class="ro-sample">sample story</span>
+            <h3>No more surprises on Monday morning</h3>
+            <blockquote>“Our developer tests every update on a copy. I click approve, and only then does it go live.”</blockquote>
+            <p class="ro-st-who"><em>Operations manager</em><em>Distribution company</em></p>
+          </div>
+          <div class="ro-st-art" style="--a:#4FC8E8;--b:#8FA4F0"><div class="ro-st-stat"><b>40+</b><span>updates tested on a copy first</span></div></div>
+        </div>
+        <div class="ro-st-slide">
+          <div class="ro-st-copy">
+            <span class="ro-sample">sample story</span>
+            <h3>Backups we never have to think about</h3>
+            <blockquote>“Someone deleted half our price list. We had it back from last night's backup in two minutes.”</blockquote>
+            <p class="ro-st-who"><em>Finance lead</em><em>Services firm</em></p>
+          </div>
+          <div class="ro-st-art" style="--a:#8FA4F0;--b:#B28CF0"><div class="ro-st-stat"><b>2 min</b><span>to restore from backup</span></div></div>
+        </div>
+      </div>
+      <button class="ro-st-side ro-s-r1" type="button" data-go="1" aria-label="Next story"><i style="--a:#B28CF0;--b:#7EF0C8">F</i></button>
+      <button class="ro-st-side ro-s-r2" type="button" data-go="2" aria-label="Next story"><i style="--a:#7EF0C8;--b:#4FC8E8">M</i></button>
+    </div>
+    <div class="ro-st-dots"><i class="ro-is-on"></i><i></i><i></i></div>
+  </div>
+</section>
+
+<section id="ro-dev" class="ro-sec ro-sec-white">
+  <div class="ro-wrap">
+    <div class="ro-head">
+      <span class="ro-eyebrow">For developers</span>
+      <h2>Push a branch. Get an Odoo.</h2>
+      <p>Every Git branch becomes its own isolated Odoo, built, upgraded and live on its own URL in minutes.</p>
+    </div>
+    <div class="ro-tabs" role="tablist" data-tabs="1">
+      <button type="button" role="tab" class="ro-is-on" data-t="0">Branches<i></i></button>
+      <button type="button" role="tab" data-t="1">Builds<i></i></button>
+      <button type="button" role="tab" data-t="2">Sandbox<i></i></button>
+      <button type="button" role="tab" data-t="3">Your server<i></i></button>
+    </div>
+    <div class="ro-devwrap">
+      <i class="ro-blob ro-blob-d"></i><i class="ro-blob ro-blob-e"></i>
+      <div class="ro-pcard ro-devcard">
+        <div class="ro-dpane ro-is-on" data-d="0">
+          <div class="ro-dcopy">
+            <h3>Every branch is an environment</h3>
+            <p>Connect a GitHub repo once with the GitHub App. Production, staging and every feature branch get their own Odoo, database and filestore.</p>
+            <ul class="ro-legend"><li><b class="ro-t-prod"></b>Production</li><li><b class="ro-t-stg"></b>Staging</li><li><b class="ro-t-dev"></b>Development</li></ul>
+          </div>
+          <div class="ro-dviz">
+            <svg class="ro-graph" viewBox="0 0 520 210" preserveAspectRatio="xMidYMid meet">
+              <path class="ro-g ro-g-main" d="M20 40 H500"/>
+              <path class="ro-g ro-g-stg" d="M90 40 C130 40 130 105 170 105 H500"/>
+              <path class="ro-g ro-g-feat" d="M210 105 C250 105 250 170 290 170 H430 C470 170 470 105 500 105"/>
+              <circle class="ro-c-main" cx="20" cy="40" r="7"/><circle class="ro-c-main" cx="260" cy="40" r="7"/><circle class="ro-c-main" cx="500" cy="40" r="9"/>
+              <circle class="ro-c-stg" cx="170" cy="105" r="7"/><circle class="ro-c-stg" cx="360" cy="105" r="7"/>
+              <circle class="ro-c-feat" cx="290" cy="170" r="7"/><circle class="ro-c-feat" cx="380" cy="170" r="7"/>
+              <text x="20" y="20">main → production</text><text x="170" y="88">staging</text><text x="290" y="200">feature/invoices</text>
+            </svg>
+            <ul class="ro-blist" data-branches="1">
+              <li><b class="ro-t-prod"></b>main<em>production · running</em></li>
+              <li><b class="ro-t-stg"></b>staging<em>staging · running</em></li>
+              <li><b class="ro-t-dev"></b>feature/invoices<em class="ro-bld">building…</em></li>
+            </ul>
+          </div>
+        </div>
+        <div class="ro-dpane" data-d="1">
+          <div class="ro-dcopy">
+            <h3>Each push runs the full pipeline</h3>
+            <p>Clone, install Python requirements, build the image, upgrade modules and route it live. Build logs stream to the panel.</p>
+          </div>
+          <div class="ro-dviz">
+<div class="ro-term">
+              <div class="ro-term-bar"><i></i><i></i><i></i><span>build · feature/invoices</span><em data-build-state="1">running</em></div>
+              <pre class="ro-term-log" data-log="1"></pre>
+              <div class="ro-term-prog"><span data-build-bar="1"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ro-dpane" data-d="2">
+          <div class="ro-dcopy">
+            <h3>Isolated by default</h3>
+            <p>gVisor containers, a private network and a database role per environment. Test environments sleep when idle and wake on the next visit.</p>
+          </div>
+          <div class="ro-dviz">
+            <div class="ro-sbx">
+              <div><b class="ro-t-prod"></b>production<em>running</em></div>
+              <div><b class="ro-t-stg"></b>staging<em>running</em></div>
+              <div><b class="ro-t-dev"></b>feature/invoices<em class="ro-bld">building</em></div>
+              <div class="ro-idle"><b></b>fix/vat-report<em>sleeping</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="ro-dpane" data-d="3">
+          <div class="ro-dcopy">
+            <h3>Bring your own server</h3>
+            <p>Link an Ubuntu 24.04 or 26.04 server over SSH. Runodoo deploys native Odoo on it, with the same branches, pushes and panel.</p>
+          </div>
+          <div class="ro-dviz">
+            <div class="ro-srv">
+              <div class="ro-sv"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="28" height="28"/><b>runodoo</b><span>control</span></div>
+              <div class="ro-sv-link"><i></i></div>
+              <div class="ro-sv"><b>your-server</b><span>ubuntu · ssh</span><div class="ro-bars"><i></i><i></i><i></i></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ro-tech" class="ro-sec">
+  <div class="ro-wrap">
+    <div class="ro-head">
+      <span class="ro-eyebrow ro-eyebrow-ink">Technology</span>
+      <h2>Built on tools you already trust</h2>
+      <p>Open-source Odoo on a proven, modern stack. More connections are added as we grow.</p>
+      <a class="ro-arrow-link" href="#ro-dev">See how it fits together <span>→</span></a>
+    </div>
+    <div class="ro-tech" data-tech="1"></div>
+    <div class="ro-tech-big">
+      <a class="ro-tb" href="#ro-dev">
+        <span class="ro-tb-ic" style="--c:#24292f">GH</span><span class="ro-tb-go">↗</span>
+        <h3>GitHub</h3>
+        <p>Connect a repository once with the GitHub App. Every branch becomes its own Odoo, every push a new build.</p>
+      </a>
+      <a class="ro-tb" href="#ro-dev">
+        <span class="ro-tb-ic" style="--c:#E95420">U</span><span class="ro-tb-go">↗</span>
+        <h3>Your own server</h3>
+        <p>Link an Ubuntu 24.04 or 26.04 server over SSH and run the same branches, backups and panel on it.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="ro-faq" class="ro-sec">
+  <div class="ro-wrap ro-faq-grid">
+    <div>
+      <h2>Good to know</h2>
+      <p class="ro-sub">Something else? Book a 30-minute session with an Odoo expert.</p>
+      <a class="ro-btn ro-btn-ink" t-att-href="ro_support">Book support</a>
+    </div>
+    <div class="ro-faq">
+      <details open=""><summary>What does it cost?</summary><p>The first 15 days are free. Monthly plans will be published when early access ends.</p></details>
+      <details><summary>Can you move my current Odoo?</summary><p>Yes. Book a support session and we move your database and files with you, then check that everything works.</p></details>
+      <details><summary>Who owns my data?</summary><p>You do. Download a full backup any time, or run Runodoo on your own server.</p></details>
+      <details><summary>Do I need a developer?</summary><p>Not for standard Odoo apps. If you have custom modules, your developer connects their GitHub repository and we handle the rest.</p></details>
+      <details><summary>What is "Book support"?</summary><p>A paid 30-minute video call with an Odoo expert: setup, moving your Odoo, or any question about your system.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="ro-sec ro-final-sec">
+  <div class="ro-wrap">
+    <div class="ro-final">
+      <div class="ro-final-copy">
+        <h2>Your Odoo, ready in minutes.</h2>
+        <p>Try it free for 15 days. Need a hand? Book a 30-minute session with an Odoo expert.</p>
+        <div class="ro-hero-btns">
+          <a class="ro-btn ro-btn-blue ro-btn-lg" t-att-href="ro_trial">Start 15-day free trial</a>
+          <a class="ro-btn ro-btn-ghost ro-btn-lg" t-att-href="ro_support">Book support</a>
+        </div>
+      </div>
+      <div class="ro-final-stage" aria-hidden="true">
+        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png" alt=""/>
+        <canvas id="ro-gl-final"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="ro-foot">
+  <div class="ro-wrap ro-foot-grid">
+    <div class="ro-foot-brand">
+      <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="30" height="30"/><span>Runodoo<em>.online</em></span></a>
+      <p>Odoo hosting, looked after.</p>
+    </div>
+    <div><h4>Product</h4><a href="#ro-how">How it works</a><a href="#ro-peace">Backups &amp; safety</a><a href="#ro-dev">For developers</a></div>
+    <div><h4>Get started</h4><a t-att-href="ro_trial">Free trial</a><a t-att-href="ro_support">Book support</a><a href="https://app.runodoo.online/login">Sign in</a></div>
+    <div><h4>Help</h4><a href="#ro-faq">FAQ</a><a t-att-href="ro_support">Contact</a></div>
+  </div>
+  <div class="ro-wrap ro-foot-legal">© <span class="ro-year">2026</span> Runodoo · Odoo is a trademark of Odoo S.A.</div>
+</footer>
+
+<script src="/website_runodoo/static/lib/gsap/gsap.min.js"></script>
+<script src="/website_runodoo/static/lib/gsap/ScrollTrigger.min.js"></script>
+<script src="/website_runodoo/static/lib/gsap/SplitText.min.js"></script>
+</div>
+<script type="importmap">{"imports": {"three": "/website_runodoo/static/lib/three/three.module.min.js"}}</script>
+<script type="module" src="/website_runodoo/static/src/js/home.js?v=10"/>
+        </xpath>
+    </template>
+</odoo>

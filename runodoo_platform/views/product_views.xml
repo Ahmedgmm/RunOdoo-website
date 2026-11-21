@@ -11,6 +11,7 @@
                         <group string="Plan">
                             <field name="oh_plan" placeholder="e.g. starter"/>
                             <field name="oh_period" invisible="not oh_plan"/>
+                            <field name="oh_currency_id" invisible="not oh_plan"/>
                             <field name="oh_highlight" invisible="not oh_plan"/>
                         </group>
                         <group string="What the customer gets" invisible="not oh_plan">

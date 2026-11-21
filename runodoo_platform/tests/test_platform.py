@@ -74,6 +74,21 @@ class TestPlatform(TransactionCase):
         self.assertNotIn('MB', lines)
         with self.assertRaises(Exception):
             tmpl.oh_workers = 0
+        with self.assertRaises(Exception):
+            tmpl.oh_workers = 1        # 2 projects need 2 workers
+
+    def test_shipped_plans_and_usd_invoice(self):
+        plans = self.env['product.template'].browse([
+            self.env.ref(f'runodoo_platform.plan_{p}{y}').id for p in ('starter', 'business', 'pro') for y in ('', '_yearly')])
+        self.assertEqual(sorted(set(plans.mapped('oh_projects'))), [1, 3, 5])
+        self.assertTrue(all(p.oh_workers >= p.oh_projects for p in plans))
+        usd = self.env.ref('base.USD')
+        starter = self.env.ref('runodoo_platform.plan_starter').product_variant_id
+        sub = self.env['runodoo.subscription'].create({'partner_id': self.partner.id, 'product_id': starter.id})
+        with patch(API, side_effect=FakePlatform()):
+            sub.action_start()
+        move = sub._open_invoice()
+        self.assertEqual((move.currency_id, move.amount_total), (usd, 29))   # USD, no conversion, no tax
 
     def test_trial_invite_then_account_created(self):
         fake = FakePlatform()

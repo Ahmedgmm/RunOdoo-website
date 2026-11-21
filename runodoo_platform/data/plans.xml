@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Starting plans (USD). noupdate: created once, then edit them in Website → Hosting plans — upgrades keep your
+         changes. Prices are final (no tax line added): set taxes on the products if VAT must be charged.
+         Workers ≥ projects (each production needs one); dev / staging always run 1 worker. -->
+    <record id="plan_starter" model="product.template">
+        <field name="name">Starter</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">10</field>
+        <field name="list_price">29</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">starter</field>
+        <field name="oh_period">month</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">1</field>
+        <field name="oh_storage_gb">10</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">1</field>
+        <field name="oh_staging_envs">1</field>
+        <field name="oh_collaborators">2</field>
+        <field name="oh_backup_days">7</field>
+        <field name="oh_highlight" eval="False"/>
+        <field name="oh_features">Daily backups
+Free SSL
+E-mail support</field>
+    </record>
+    <record id="plan_starter_yearly" model="product.template">
+        <field name="name">Starter (yearly)</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">11</field>
+        <field name="list_price">290</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">starter</field>
+        <field name="oh_period">year</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">1</field>
+        <field name="oh_storage_gb">10</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">1</field>
+        <field name="oh_staging_envs">1</field>
+        <field name="oh_collaborators">2</field>
+        <field name="oh_backup_days">7</field>
+        <field name="oh_highlight" eval="False"/>
+        <field name="oh_features">Daily backups
+Free SSL
+E-mail support</field>
+    </record>
+    <record id="plan_business" model="product.template">
+        <field name="name">Business</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">20</field>
+        <field name="list_price">89</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">business</field>
+        <field name="oh_period">month</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">4</field>
+        <field name="oh_storage_gb">30</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">3</field>
+        <field name="oh_staging_envs">3</field>
+        <field name="oh_collaborators">5</field>
+        <field name="oh_backup_days">14</field>
+        <field name="oh_highlight" eval="True"/>
+        <field name="oh_features">Daily backups
+Free SSL
+Priority e-mail support</field>
+    </record>
+    <record id="plan_business_yearly" model="product.template">
+        <field name="name">Business (yearly)</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">21</field>
+        <field name="list_price">890</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">business</field>
+        <field name="oh_period">year</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">4</field>
+        <field name="oh_storage_gb">30</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">3</field>
+        <field name="oh_staging_envs">3</field>
+        <field name="oh_collaborators">5</field>
+        <field name="oh_backup_days">14</field>
+        <field name="oh_highlight" eval="True"/>
+        <field name="oh_features">Daily backups
+Free SSL
+Priority e-mail support</field>
+    </record>
+    <record id="plan_pro" model="product.template">
+        <field name="name">Pro</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">30</field>
+        <field name="list_price">179</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">pro</field>
+        <field name="oh_period">month</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">8</field>
+        <field name="oh_storage_gb">75</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">5</field>
+        <field name="oh_staging_envs">5</field>
+        <field name="oh_collaborators">10</field>
+        <field name="oh_backup_days">30</field>
+        <field name="oh_highlight" eval="False"/>
+        <field name="oh_features">Daily backups
+Free SSL
+Priority support
+Your own domains</field>
+    </record>
+    <record id="plan_pro_yearly" model="product.template">
+        <field name="name">Pro (yearly)</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="sequence">31</field>
+        <field name="list_price">1790</field>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="oh_plan">pro</field>
+        <field name="oh_period">year</field>
+        <field name="oh_currency_id" ref="base.USD"/>
+        <field name="oh_workers">8</field>
+        <field name="oh_storage_gb">75</field>
+        <field name="oh_production" eval="True"/>
+        <field name="oh_projects">5</field>
+        <field name="oh_staging_envs">5</field>
+        <field name="oh_collaborators">10</field>
+        <field name="oh_backup_days">30</field>
+        <field name="oh_highlight" eval="False"/>
+        <field name="oh_features">Daily backups
+Free SSL
+Priority support
+Your own domains</field>
+    </record>
+</odoo>

@@ -96,16 +96,21 @@ class RunodooSubscription(models.Model):
             return self._open_invoice()[:1]
         start = self.paid_until or fields.Date.context_today(self)
         end = start + self._step()
+        plan = self.product_id
+        currency = plan.oh_currency_id or self.company_id.currency_id
         move = self.env['account.move'].sudo().with_company(self.company_id).create({
             'move_type': 'out_invoice',
             'partner_id': self.partner_id.id,
+            'currency_id': currency.id,
             'invoice_origin': self.name,
             'runodoo_subscription_id': self.id,
             'runodoo_period_end': end,
             'invoice_line_ids': [fields.Command.create({
-                'product_id': self.product_id.id,
-                'name': _("%(plan)s hosting, %(start)s – %(end)s", plan=self.product_id.name, start=start, end=end),
+                'product_id': plan.id,
+                'name': _("%(plan)s hosting, %(start)s – %(end)s", plan=plan.name, start=start, end=end),
                 'quantity': 1,
+                # the plan's price is in its own currency (e.g. USD): never converted from the company currency
+                'price_unit': plan.lst_price,
             })],
         })
         move.action_post()

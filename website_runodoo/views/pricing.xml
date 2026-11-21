@@ -38,6 +38,7 @@
             </article>
         </div>
         <p t-if="not ro_plans" class="ro-plans-soon">Paid plans are coming soon — start with the free trial.</p>
+        <p t-if="ro_plans" class="ro-plans-soon">Prices in US dollars. Need more projects or workers? <a href="/contactus">Talk to us</a> about a custom plan.</p>
     </template>
 
     <template id="pricing" name="Pricing">

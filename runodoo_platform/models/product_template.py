@@ -20,6 +20,9 @@ class ProductTemplate(models.Model):
         "Hosting plan", help="Plan name sent to the platform (e.g. starter, pro). Set ⇒ this product is a hosting "
                              "plan: listed on /pricing and on /my/platform.")
     oh_period = fields.Selection([('month', "Monthly"), ('year', "Yearly")], "Billing period", default='month')
+    oh_currency_id = fields.Many2one(
+        'res.currency', "Plan currency", default=lambda self: self.env.ref('base.USD', raise_if_not_found=False),
+        help="The sales price of a plan is in this currency: /pricing shows it and invoices are made in it.")
     oh_workers = fields.Integer("Workers", default=1,
                                 help="Odoo workers for production (together). Each worker serves more users at once.")
     oh_storage_gb = fields.Integer("Storage (GB)", default=10, help="Database + files + code, all environments.")
@@ -37,7 +40,7 @@ class ProductTemplate(models.Model):
         help="Advanced: other platform limits, merged over the fields above, e.g. {\"build_minutes_per_day\": 120}. "
              "expires_at is set from the paid period.")
 
-    @api.constrains('oh_limits', 'oh_workers', 'oh_storage_gb', 'oh_projects', 'oh_staging_envs',
+    @api.constrains('oh_limits', 'oh_workers', 'oh_storage_gb', 'oh_projects', 'oh_staging_envs', 'oh_production',
                     'oh_collaborators', 'oh_backup_days')
     def _check_oh_limits(self):
         for product in self:
@@ -49,6 +52,8 @@ class ProductTemplate(models.Model):
                 raise ValidationError(_("Don't set expires_at on a plan: it follows the paid period."))
             if product.oh_plan and (product.oh_workers < 1 or product.oh_projects < 1 or product.oh_storage_gb < 1):
                 raise ValidationError(_("A plan needs at least 1 worker, 1 project and 1 GB of storage."))
+            if product.oh_plan and product.oh_production and product.oh_workers < product.oh_projects:
+                raise ValidationError(_("Give a plan at least one worker per project: every production needs one."))
             if min(product.oh_staging_envs, product.oh_collaborators, product.oh_backup_days) < 0:
                 raise ValidationError(_("Plan numbers can't be negative."))
 

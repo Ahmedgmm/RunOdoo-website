@@ -43,7 +43,7 @@ class Website(models.Model):
             main = card['month'] or card['year']
             out.append({**card, 'main': main, 'name': main.name, 'lines': main._oh_lines(),
                         'highlight': any(p and p.oh_highlight for p in (card['month'], card['year'])),
-                        'currency': main.currency_id})
+                        'currency': main.oh_currency_id or main.currency_id})
         return out
 
     def _runodoo_trial_days(self):

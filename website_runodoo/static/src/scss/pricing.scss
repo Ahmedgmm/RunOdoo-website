@@ -24,7 +24,7 @@
     .ro-plan-notes { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .ro-plan-notes p { color: var(--slate); line-height: 1.6; }
     .ro-plan-notes a { color: var(--blue); font-weight: 600; }
-    .ro-faq a { color: var(--blue); font-weight: 600; }
+    .ro-faq a, .ro-plans-soon a { color: var(--blue); font-weight: 600; }
 
     @media (max-width: 900px) {
         .ro-plan-notes { grid-template-columns: 1fr; }

@@ -1,0 +1,163 @@
+// /my/platform and the /my/home box (views/portal_templates.xml). Brand tokens as on the homepage
+// (website_runodoo home.scss), repeated here: this module does not depend on website_runodoo.
+
+.ro-acct {
+    --ink: #0b3558; --slate: #476788; --mist: #a6bbd1; --cloud: #f8f9fb; --paper: #fff; --pebble: #f0f3f8;
+    --hair: #d4e0ed; --blue: #006bff; --blue-d: #0057d6; --badge: #e6f0ff; --ok: #0e9f6e; --ok-bg: #e7f7f0;
+    --warn: #b45309; --warn-bg: #fff6e5; --bad: #c62828; --bad-bg: #fdecec;
+    --sh-card: rgba(71,103,136,.04) 0 4px 5px, rgba(71,103,136,.03) 0 8px 15px, rgba(71,103,136,.08) 0 30px 50px;
+    color: var(--ink);
+    margin: 8px 0 48px;
+
+    h1, h2, h3, h4 { color: var(--ink); margin: 0; letter-spacing: -.01em; }
+    a { color: var(--blue); }
+
+    // ---------- buttons ----------
+    .ro-acct-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent;
+        border-radius: 999px; padding: 12px 26px; font-weight: 700; font-size: 16px; line-height: 1.2; cursor: pointer;
+        text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s, transform .15s; }
+    .ro-acct-btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .ro-acct-btn-blue { background: var(--blue); color: #fff; box-shadow: rgba(0,107,255,.25) 0 6px 16px; }
+    .ro-acct-btn-blue:hover { background: var(--blue-d); color: #fff; }
+    .ro-acct-btn-ink { background: var(--ink); color: #fff; }
+    .ro-acct-btn-ink:hover { background: #072640; color: #fff; }
+    .ro-acct-btn-line { background: var(--paper); color: var(--ink); border-color: var(--hair); }
+    .ro-acct-btn-line:hover { border-color: var(--ink); color: var(--ink); }
+    .ro-acct-btn-sm { padding: 9px 18px; font-size: 14px; }
+    .ro-acct-btn-white { background: #fff; color: var(--ink); }
+    .ro-acct-btn-white:hover { background: var(--badge); color: var(--ink); }
+
+    // ---------- alerts ----------
+    .ro-acct-alert { border-radius: 14px; padding: 14px 18px; margin-bottom: 18px; font-weight: 500; }
+    .ro-acct-alert-bad { background: var(--bad-bg); color: var(--bad); }
+    .ro-acct-alert-ok { background: var(--ok-bg); color: var(--ok); }
+
+    // ---------- hero ----------
+    .ro-acct-hero { position: relative; overflow: hidden; border-radius: 24px; padding: 36px 40px; color: #fff;
+        background: radial-gradient(120% 140% at 100% 0%, #1d5fd1 0%, rgba(29,95,209,0) 55%),
+                    radial-gradient(90% 120% at 0% 100%, #0a4a8a 0%, rgba(10,74,138,0) 60%), var(--ink);
+        box-shadow: var(--sh-card); }
+    .ro-acct-hero h1 { color: #fff; font-size: 32px; font-weight: 800; }
+    .ro-acct-hero p { margin: 8px 0 0; color: rgba(255,255,255,.78); font-size: 16px; max-width: 620px; }
+    .ro-acct-hero-top { display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .ro-acct-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .ro-acct-hero-actions form { margin: 0; }
+    .ro-acct-eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        color: rgba(255,255,255,.65); margin-bottom: 8px; }
+    .ro-acct-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .ro-acct-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 600; color: #fff; }
+    .ro-acct-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+    .ro-acct-dot-warn { background: #fbbf24; }
+    .ro-acct-dot-bad { background: #f87171; }
+
+    // ---------- steps ----------
+    .ro-acct-steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+        counter-reset: step; }
+    .ro-acct-steps li { position: relative; counter-increment: step; padding: 14px 14px 14px 52px; border-radius: 14px;
+        background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); font-size: 14px; color: rgba(255,255,255,.7); }
+    .ro-acct-steps li b { display: block; color: #fff; font-size: 15px; }
+    .ro-acct-steps li::before { content: counter(step); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+        width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px;
+        background: rgba(255,255,255,.12); color: #fff; }
+    .ro-acct-steps li.is-done::before { content: "✓"; background: #4ade80; color: var(--ink); }
+    .ro-acct-steps li.is-now { background: #fff; border-color: #fff; color: var(--slate); }
+    .ro-acct-steps li.is-now b { color: var(--ink); }
+    .ro-acct-steps li.is-now::before { background: var(--blue); color: #fff; box-shadow: 0 0 0 5px rgba(0,107,255,.18); }
+
+    // ---------- cards ----------
+    .ro-acct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .ro-acct-card { background: var(--paper); border: 1px solid var(--pebble); border-radius: 20px; padding: 26px 28px;
+        box-shadow: var(--sh-card); }
+    .ro-acct-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+    .ro-acct-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .ro-acct-card-head a { font-size: 14px; font-weight: 600; }
+    .ro-acct-muted { color: var(--slate); font-size: 14px; }
+
+    .ro-acct-bill { display: flex; align-items: center; gap: 18px; margin-top: 20px; border-radius: 20px; padding: 20px 24px;
+        background: var(--warn-bg); border: 1px solid #fde2b3; }
+    .ro-acct-bill-icon { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+        background: #fff; font-size: 20px; }
+    .ro-acct-bill-body { flex-grow: 1; }
+    .ro-acct-bill-body b { font-size: 16px; }
+    .ro-acct-bill-amount { font-size: 22px; font-weight: 800; white-space: nowrap; }
+
+    .ro-acct-next { margin: 0; padding: 0; list-style: none; counter-reset: next; display: grid; gap: 14px; }
+    .ro-acct-next li { position: relative; counter-increment: next; padding-left: 38px; font-size: 15px; line-height: 1.5; }
+    .ro-acct-next li::before { content: counter(next); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+        border-radius: 50%; display: grid; place-items: center; background: var(--badge); color: var(--blue);
+        font-weight: 800; font-size: 13px; }
+
+    // usage bars
+    .ro-acct-usage { display: grid; gap: 14px; }
+    .ro-acct-meter-label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .ro-acct-meter-label span { color: var(--slate); font-weight: 500; }
+    .ro-acct-meter { height: 8px; border-radius: 999px; background: var(--pebble); overflow: hidden; }
+    .ro-acct-meter i { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
+    .ro-acct-meter i.is-full { background: var(--ink); }   // a plan used in full is normal, not an error
+    .ro-acct-over { margin-top: 14px; color: var(--bad); font-size: 14px; font-weight: 600; }
+
+    // current plan facts
+    .ro-acct-facts { display: grid; gap: 12px; margin: 0; }
+    .ro-acct-facts div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--pebble);
+        padding-bottom: 10px; font-size: 15px; }
+    .ro-acct-facts dt { font-weight: 500; color: var(--slate); }
+    .ro-acct-facts dd { margin: 0; font-weight: 700; text-align: right; }
+
+    // ---------- plans ----------
+    .ro-acct-plans-wrap { margin-top: 36px; }
+    .ro-acct-plans-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .ro-acct-plans-head h2 { font-size: 26px; font-weight: 800; }
+    .ro-acct-switch { display: inline-flex; background: var(--pebble); border-radius: 999px; padding: 4px; }
+    .ro-acct-switch label { margin: 0; padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--slate);
+        cursor: pointer; }
+    .ro-acct-switch label small { font-weight: 600; color: var(--ok); margin-left: 4px; }
+    .ro-acct-per { position: absolute; opacity: 0; pointer-events: none; }
+    #ro_per_m:checked ~ .ro-acct-plans-head label[for="ro_per_m"],
+    #ro_per_y:checked ~ .ro-acct-plans-head label[for="ro_per_y"] { background: #fff; color: var(--ink); box-shadow: rgba(11,53,88,.12) 0 2px 6px; }
+    #ro_per_m:checked ~ .ro-acct-plans .is-year,
+    #ro_per_y:checked ~ .ro-acct-plans .is-month { display: none; }
+    #ro_per_m:focus-visible ~ .ro-acct-plans-head label[for="ro_per_m"],
+    #ro_per_y:focus-visible ~ .ro-acct-plans-head label[for="ro_per_y"] { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .ro-acct-coupon { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--paper); border: 1px dashed var(--hair);
+        border-radius: 16px; padding: 14px 18px; margin-bottom: 22px; }
+    .ro-acct-coupon label { margin: 0; font-weight: 700; font-size: 15px; }
+    .ro-acct-coupon input { flex: 1 1 200px; max-width: 320px; border: 1px solid var(--hair); border-radius: 10px; padding: 9px 14px;
+        font-size: 15px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--cloud); }
+    .ro-acct-coupon input::placeholder { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--mist); }
+    .ro-acct-coupon input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(0,107,255,.12); background: #fff; }
+    .ro-acct-coupon span { color: var(--slate); font-size: 14px; }
+
+    .ro-acct-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; align-items: stretch; }
+    .ro-acct-plan { position: relative; display: flex; flex-direction: column; background: var(--paper); border: 1px solid var(--pebble);
+        border-radius: 20px; padding: 28px 26px; box-shadow: var(--sh-card); }
+    .ro-acct-plan.is-hl { border: 2px solid var(--blue); box-shadow: var(--sh-card), 0 0 0 6px rgba(0,107,255,.06); }
+    .ro-acct-plan-badge { position: absolute; top: -12px; left: 24px; background: var(--blue); color: #fff; font-size: 11px; font-weight: 700;
+        letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px; }
+    .ro-acct-plan h3 { font-size: 20px; font-weight: 800; }
+    .ro-acct-price { margin: 12px 0 0; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+    .ro-acct-price b { font-size: 34px; font-weight: 800; letter-spacing: -.02em; }
+    .ro-acct-price span { color: var(--slate); font-weight: 600; }
+    .ro-acct-price s { color: var(--mist); font-size: 16px; }
+    .ro-acct-plan ul { list-style: none; padding: 0; margin: 20px 0 24px; display: grid; gap: 9px; flex-grow: 1; align-content: start; }
+    .ro-acct-plan li { position: relative; padding-left: 26px; font-size: 14.5px; }
+    .ro-acct-plan li::before { content: ""; position: absolute; left: 0; top: 3px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--badge) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='%23006bff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat; }
+    .ro-acct-plan .ro-acct-btn { width: 100%; }
+    .ro-acct-plan.is-current { background: var(--cloud); }
+    .ro-acct-plans-note { margin-top: 18px; text-align: center; color: var(--slate); font-size: 14px; }
+
+    @media (max-width: 991px) {
+        .ro-acct-steps { grid-template-columns: 1fr 1fr; }
+        .ro-acct-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 575px) {
+        .ro-acct-hero { padding: 26px 20px; border-radius: 18px; }
+        .ro-acct-hero h1 { font-size: 26px; }
+        .ro-acct-steps { grid-template-columns: 1fr; }
+        .ro-acct-hero-actions, .ro-acct-hero-actions form, .ro-acct-hero-actions .ro-acct-btn { width: 100%; }
+        .ro-acct-card { padding: 22px 20px; }
+        .ro-acct-bill { flex-wrap: wrap; }
+    }
+}

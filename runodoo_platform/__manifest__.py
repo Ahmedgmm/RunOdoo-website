@@ -3,7 +3,7 @@
     'summary': 'Customer portal for runodoo.online: plans, subscriptions, invoices and one-click access to the '
                'control panel (odoo-host provisioning API).',
     'description': 'See docs/SPEC-portal-sso.md in the runodoo project.',
-    'version': '20.0.1.0.0',
+    'version': '20.0.1.1.0',
     'category': 'Website/Website',
     'author': 'Run Odoo',
     'license': 'LGPL-3',

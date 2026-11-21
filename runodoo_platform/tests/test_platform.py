@@ -61,6 +61,20 @@ class TestPlatform(TransactionCase):
         with self.assertRaises(Exception):
             self.plan.product_tmpl_id.oh_limits = '{"expires_at": null}'
 
+    def test_plan_fields_become_limits(self):
+        tmpl = self.plan.product_tmpl_id
+        tmpl.write({'oh_workers': 2, 'oh_storage_gb': 20, 'oh_projects': 2, 'oh_staging_envs': 3,
+                    'oh_collaborators': 5, 'oh_backup_days': 14, 'oh_limits': '{"build_minutes_per_day": 120}'})
+        self.assertEqual(tmpl._oh_limits(), {
+            'workers': 2, 'disk_gb': 20, 'max_projects': 2, 'max_collaborators': 5, 'backup_retention_days': 14,
+            'allow_production': True, 'max_envs': 5, 'max_running_envs': 5, 'build_minutes_per_day': 120})
+        lines = ' | '.join(tmpl._oh_lines())
+        self.assertIn('2 workers', lines)
+        self.assertIn('20 GB storage', lines)
+        self.assertNotIn('MB', lines)
+        with self.assertRaises(Exception):
+            tmpl.oh_workers = 0
+
     def test_trial_invite_then_account_created(self):
         fake = FakePlatform()
         with patch(API, side_effect=fake):

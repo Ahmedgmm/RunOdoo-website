@@ -219,8 +219,8 @@
             <span><i style="--c:#8FA4F0"></i>Inventory</span><span><i style="--c:#B28CF0"></i>Website</span>
             <span><i style="--c:#4FC8E8"></i>CRM</span><span><i style="--c:#7EF0C8"></i>your_module</span>
           </div>
-          <div class="ro-meter"><span>CPU</span><b style="--w:34%"></b></div>
-          <div class="ro-meter"><span>RAM</span><b style="--w:52%"></b></div>
+          <div class="ro-meter"><span>Workers</span><b style="--w:34%"></b></div>
+          <div class="ro-meter"><span>Storage</span><b style="--w:52%"></b></div>
         </div>
         <div class="ro-pane" data-p="1">
           <div class="ro-pc-head"><b>Backups</b><span class="ro-muted">automatic</span></div>

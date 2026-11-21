@@ -27,3 +27,24 @@ class Website(models.Model):
             'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
             'auth_signup_uninvited': 'b2c',   # free sign-up on /web/signup: the trial starts there
         })
+
+    def _runodoo_pricing(self):
+        """Hosting plans for /pricing and the homepage, straight from the plan products (runodoo_platform): one card
+        per plan name, its monthly price first and the yearly one beside it. Memory / CPU are never listed."""
+        products = self.env['product.template'].sudo().search(
+            [('oh_plan', '!=', False), ('sale_ok', '=', True)], order='sequence, list_price, id')
+        cards = {}
+        for p in products:
+            card = cards.setdefault(p.oh_plan, {'plan': p.oh_plan, 'month': None, 'year': None})
+            if not card[p.oh_period or 'month']:
+                card[p.oh_period or 'month'] = p
+        out = []
+        for card in cards.values():
+            main = card['month'] or card['year']
+            out.append({**card, 'main': main, 'name': main.name, 'lines': main._oh_lines(),
+                        'highlight': any(p and p.oh_highlight for p in (card['month'], card['year'])),
+                        'currency': main.currency_id})
+        return out
+
+    def _runodoo_trial_days(self):
+        return self.env['runodoo.platform.api'].sudo()._int_param('trial_days', 15)

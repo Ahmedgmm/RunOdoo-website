@@ -24,7 +24,7 @@ TIMEOUT = 15
 LIMIT_KEYS = {
     'expires_at', 'max_projects', 'max_envs', 'max_running_envs', 'allow_production', 'max_collaborators', 'mem_mb',
     'cpus', 'disk_gb', 'backup_retention_days', 'mail_per_day', 'idle_stop_minutes', 'build_minutes_per_day',
-    'enterprise', 'custom_domains', 'max_servers',
+    'enterprise', 'custom_domains', 'max_servers', 'workers',
 }
 
 

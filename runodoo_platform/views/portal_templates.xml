@@ -117,7 +117,7 @@
                                 <div t-foreach="plans" t-as="plan" class="d-flex align-items-center border-top py-2 gap-2">
                                     <div class="flex-grow-1">
                                         <b t-out="plan.name"/>
-                                        <div class="small text-muted" t-out="plan.description_sale"/>
+                                        <div class="small text-muted" t-out="' · '.join(plan.product_tmpl_id._oh_lines())"/>
                                     </div>
                                     <div class="text-nowrap">
                                         <t t-out="plan.list_price" t-options="{'widget': 'monetary', 'display_currency': plan.currency_id}"/>

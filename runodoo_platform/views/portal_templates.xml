@@ -59,6 +59,15 @@
                                     Data is deleted after <t t-out="partner.oh_delete_after[:16]"/> UTC unless you choose a plan.
                                 </div>
                             </t>
+                            <div t-elif="subscription and unpaid" class="opacity-75">
+                                Your <b t-out="subscription.product_id.name"/> plan starts as soon as invoice
+                                <b t-out="unpaid[0].name"/> is paid. You'll then get a button here to sign in with
+                                GitHub and open your control panel.</div>
+                            <div t-elif="subscription and live_invite" class="opacity-75">Your
+                                <b t-out="subscription.product_id.name"/> plan is active: connect your GitHub account to
+                                open your control panel.</div>
+                            <div t-elif="subscription" class="opacity-75">Your plan is paid. Your sign-up link is
+                                being prepared: reload this page in a minute.</div>
                             <div t-else="" class="opacity-75">Not connected yet: start your free trial
                                 (<t t-out="trial_days"/> days, no card),
                                 then sign in with GitHub.</div>
@@ -71,7 +80,8 @@
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Connect GitHub →</button>
                         </form>
-                        <form t-elif="not connected" action="/my/platform/trial" method="post">
+                        <!-- a chosen plan waits for its invoice: no free trial around it -->
+                        <form t-elif="not connected and not subscription" action="/my/platform/trial" method="post">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Start free trial →</button>
                         </form>
@@ -81,7 +91,7 @@
                 <div t-if="unpaid" class="alert alert-warning d-flex align-items-center gap-3">
                     <div class="flex-grow-1">Invoice <b t-out="unpaid[0].name"/> is waiting for payment
                         (<t t-out="unpaid[0].amount_residual" t-options="{'widget': 'monetary', 'display_currency': unpaid[0].currency_id}"/>).</div>
-                    <a class="btn btn-primary" t-att-href="unpaid[0].get_portal_url()">Pay now</a>
+                    <a class="btn btn-primary" t-att-href="unpaid[0].get_portal_url()">View invoice</a>
                 </div>
 
                 <div class="row g-4">
@@ -114,6 +124,13 @@
                                 <p t-if="subscription" class="small">Current: <b t-out="subscription.product_id.name"/>
                                     <t t-if="subscription.paid_until"> · paid until <t t-out="subscription.paid_until"/></t></p>
                                 <p t-if="not plans" class="text-muted small mb-0">Plans are coming soon.</p>
+                                <!-- one form: each Choose button sends its plan, the coupon field goes with it -->
+                                <form t-if="not subscription and plans" id="oh_subscribe" action="/my/platform/subscribe" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <label for="oh_coupon" class="form-label small mb-1">Coupon code (optional)</label>
+                                    <input type="text" id="oh_coupon" name="coupon" class="form-control form-control-sm mb-2"
+                                           autocomplete="off" maxlength="64" placeholder="e.g. WELCOME"/>
+                                </form>
                                 <div t-foreach="plans" t-as="plan" class="d-flex align-items-center border-top py-2 gap-2">
                                     <div class="flex-grow-1">
                                         <b t-out="plan.name"/>
@@ -124,11 +141,8 @@
                                         <t t-out="round(plan.list_price * (100 - discount) / 100, 2)" t-options="{'widget': 'monetary', 'display_currency': plan.oh_currency_id or plan.currency_id}"/>
                                         / <t t-out="'year' if plan.oh_period == 'year' else 'month'"/>
                                     </div>
-                                    <form t-if="not subscription" action="/my/platform/subscribe" method="post">
-                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        <input type="hidden" name="product_id" t-att-value="plan.id"/>
-                                        <button class="btn btn-sm btn-primary">Choose</button>
-                                    </form>
+                                    <button t-if="not subscription" type="submit" form="oh_subscribe" name="product_id"
+                                            t-att-value="plan.id" class="btn btn-sm btn-primary">Choose</button>
                                     <span t-elif="subscription.product_id == plan" class="badge text-bg-success">Current</span>
                                 </div>
                                 <a href="/my/invoices" class="d-inline-block mt-3 small">All invoices and payments →</a>

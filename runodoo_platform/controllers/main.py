@@ -70,6 +70,10 @@ class RunodooPortal(http.Controller):
         partner = self._partner()
         if partner.oh_account_id:
             return self._back(notice=_("Your account is already connected."))
+        if request.env['runodoo.subscription'].sudo().search_count(
+                [('partner_id', '=', partner.id), ('state', 'in', ('active', 'past_due'))]):
+            # a chosen plan starts when its invoice is paid: no free trial around it
+            return self._back(_("You chose a plan: it starts as soon as its invoice is paid."))
         try:
             url = partner._oh_start_trial()
         except PlatformError as e:
@@ -87,8 +91,9 @@ class RunodooPortal(http.Controller):
         return request.redirect(partner.oh_signup_url, local=False)
 
     @http.route('/my/platform/subscribe', type='http', auth='user', website=True, methods=['POST'])
-    def subscribe(self, product_id=None, **kw):
-        """Choose a plan: new subscription + first invoice, then straight to the invoice's pay page."""
+    def subscribe(self, product_id=None, coupon=None, **kw):
+        """Choose a plan (+ optional coupon code): new subscription + first invoice, then its pay page. A 0.00
+        invoice (100 % coupon) is paid when posted, so the plan starts at once."""
         partner = self._partner()
         Sub = request.env['runodoo.subscription'].sudo()
         try:
@@ -102,10 +107,20 @@ class RunodooPortal(http.Controller):
             if current.product_id == product:
                 return self._back(notice=_("You are already on this plan."))
             return self._back(_("To change your plan, contact us: plan changes are applied from the next period."))
-        sub = Sub.create({'partner_id': partner.id, 'product_id': product.id})
+        vals = {'partner_id': partner.id, 'product_id': product.id}
+        if (coupon or '').strip():
+            found, problem = request.env['runodoo.coupon'].sudo()._find(coupon, product)
+            if problem:
+                return self._back(problem)
+            vals['coupon_id'] = found.id
+        sub = Sub.create(vals)
         sub.action_start()
         invoice = sub._open_invoice()[:1]
-        return request.redirect(invoice.get_portal_url() if invoice else '/my/platform')
+        if not invoice:   # nothing to pay (coupon): straight to the sign-up button
+            partner._oh_sync(force=True)
+            return self._back(notice=_("Your %s plan is active. Connect GitHub to open your control panel.",
+                                       product.name))
+        return request.redirect(invoice.get_portal_url())
 
     # ---------- platform → Odoo ----------
     @http.route(HOOK_PATH, type='http', auth='public', methods=['POST'], csrf=False, save_session=False)

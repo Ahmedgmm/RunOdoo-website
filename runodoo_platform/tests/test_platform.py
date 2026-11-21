@@ -192,6 +192,71 @@ class TestHooks(HttpCase):
         self.assertIn('name="token" value="tok123"', r.text)
         self.assertNotIn('tok123', r.url)
 
+    def test_chosen_plan_waits_for_its_invoice(self):
+        """A buyer without an account picks a plan: no trial around it; the sign-up link comes once it is paid."""
+        user = self.env['res.users'].create({'name': 'Portal W', 'login': 'portal_w', 'password': 'portal_w_pw1',
+                                             'email': 'w@example.com',
+                                             'group_ids': [(6, 0, [self.env.ref('base.group_portal').id])]})
+        plan = self.env['product.product'].create({
+            'name': 'Starter W', 'type': 'service', 'list_price': 29, 'oh_plan': 'starter', 'oh_period': 'month'})
+        self.authenticate('portal_w', 'portal_w_pw1')
+        fake = FakePlatform()
+        with patch(API, side_effect=fake):
+            page = self.url_open('/my/platform')
+            self.assertIn('Start free trial', page.text)
+            csrf = page.text.split('name="csrf_token" value="')[1].split('"')[0]
+            self.url_open('/my/platform/subscribe', data={'csrf_token': csrf, 'product_id': plan.id})
+            page = self.url_open('/my/platform')
+            self.assertIn('starts as soon as invoice', page.text)
+            self.assertNotIn('/my/platform/trial', page.text)
+            r = self.url_open('/my/platform/trial', data={'csrf_token': csrf}, allow_redirects=False)
+            self.assertIn('error=', r.headers['Location'])
+            self.assertFalse([c for c in fake.calls if c[1] == '/invites'], "no invite before payment")
+            # the operator clears the invoice in the back end
+            move = self.env['runodoo.subscription'].search([('partner_id', '=', user.partner_id.id)])._open_invoice()
+            self.env['account.payment.register'].with_context(active_model='account.move', active_ids=move.ids) \
+                .create({})._create_payments()
+            invites = [c for c in fake.calls if c[1] == '/invites']
+            self.assertEqual(invites[-1][2]['plan'], 'starter')
+            self.assertTrue(invites[-1][2]['limits']['expires_at'])
+            page = self.url_open('/my/platform')
+            self.assertIn('Connect GitHub', page.text)
+
+    def test_free_coupon_starts_the_plan_at_once(self):
+        self.env['ir.config_parameter'].sudo().set_str('runodoo_platform.discount_percent', '0')
+        plan = self.env['product.product'].create({
+            'name': 'Starter C', 'type': 'service', 'list_price': 29, 'oh_plan': 'starter', 'oh_period': 'month'})
+        self.env['runodoo.coupon'].create({'name': ' free100 ', 'discount': 100, 'months': 1, 'max_uses': 1})
+        users = [self.env['res.users'].create({
+            'name': f'Portal {n}', 'login': f'portal_{n}', 'password': f'portal_{n}_pw1', 'email': f'{n}@example.com',
+            'group_ids': [(6, 0, [self.env.ref('base.group_portal').id])]}) for n in ('c1', 'c2')]
+        fake = FakePlatform()
+        with patch(API, side_effect=fake):
+            self.authenticate('portal_c1', 'portal_c1_pw1')
+            csrf = self.url_open('/my/platform').text.split('name="csrf_token" value="')[1].split('"')[0]
+            r = self.url_open('/my/platform/subscribe', data={'csrf_token': csrf, 'product_id': plan.id,
+                                                              'coupon': 'nope'}, allow_redirects=False)
+            self.assertIn('Unknown%20coupon', r.headers['Location'])
+            r = self.url_open('/my/platform/subscribe', data={'csrf_token': csrf, 'product_id': plan.id,
+                                                              'coupon': 'Free100'}, allow_redirects=False)
+            self.assertIn('notice=', r.headers['Location'])
+            sub = self.env['runodoo.subscription'].search([('partner_id', '=', users[0].partner_id.id)])
+            self.assertEqual(sub.coupon_id.name, 'FREE100')
+            self.assertEqual(sub.invoice_ids.amount_total, 0)
+            self.assertIn(sub.invoice_ids.payment_state, ('paid', 'in_payment'))
+            self.assertTrue(sub.paid_until)
+            self.assertEqual([c for c in fake.calls if c[1] == '/invites'][-1][2]['plan'], 'starter')
+            self.assertIn('Connect GitHub', self.url_open('/my/platform').text)
+            # the second invoice is at the list price
+            sub.next_invoice_date = sub.paid_until
+            self.assertEqual(sub._create_invoice().amount_untaxed, 29)
+            # single use
+            self.authenticate('portal_c2', 'portal_c2_pw1')
+            csrf = self.url_open('/my/platform').text.split('name="csrf_token" value="')[1].split('"')[0]
+            r = self.url_open('/my/platform/subscribe', data={'csrf_token': csrf, 'product_id': plan.id,
+                                                              'coupon': 'FREE100'}, allow_redirects=False)
+            self.assertIn('used%20already', r.headers['Location'])
+
 
 @tagged('post_install', '-at_install')
 class TestAuthPages(HttpCase):

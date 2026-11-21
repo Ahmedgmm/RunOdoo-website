@@ -30,6 +30,8 @@ class RunodooSubscription(models.Model):
         "Discount (%)", tracking=True,
         default=lambda self: self.env['runodoo.platform.api']._discount(),
         help="Taken off every invoice of this subscription: the plan discount when it started (Settings → Run Odoo).")
+    coupon_id = fields.Many2one('runodoo.coupon', "Coupon", readonly=True, tracking=True, index='btree_not_null',
+                                help="Typed when the plan was chosen: its discount covers the first invoices.")
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     state = fields.Selection([('draft', "Draft"), ('active', "Active"), ('past_due', "Past due"),
                               ('cancelled', "Cancelled")], default='draft', required=True, tracking=True)
@@ -94,6 +96,14 @@ class RunodooSubscription(models.Model):
         action['context'] = {'default_move_type': 'out_invoice'}
         return action
 
+    def _invoice_discount(self):
+        """The coupon's discount on its first `months` invoices (0 = all), else the subscription's own."""
+        coupon = self.coupon_id
+        done = len(self.invoice_ids.filtered(lambda m: m.state != 'cancel'))
+        if coupon and (not coupon.months or done < coupon.months):
+            return coupon.discount
+        return self.discount
+
     def _create_invoice(self):
         self.ensure_one()
         if self._open_invoice():
@@ -115,7 +125,7 @@ class RunodooSubscription(models.Model):
                 'quantity': 1,
                 # the plan's price is in its own currency (e.g. USD): never converted from the company currency
                 'price_unit': plan.lst_price,
-                'discount': self.discount,   # shown on the invoice: list price, then the discount
+                'discount': self._invoice_discount(),   # shown on the invoice: list price, then the discount
             })],
         })
         move.action_post()

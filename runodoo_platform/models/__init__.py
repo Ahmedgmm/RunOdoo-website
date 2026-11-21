@@ -5,3 +5,4 @@ from . import res_partner
 from . import runodoo_subscription
 from . import account_move
 from . import runodoo_platform_event
+from . import runodoo_coupon

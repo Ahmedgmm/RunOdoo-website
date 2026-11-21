@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="runodoo_coupon_list" model="ir.ui.view">
+        <field name="name">runodoo.coupon.list</field>
+        <field name="model">runodoo.coupon</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="discount"/>
+                <field name="months"/>
+                <field name="use_count"/>
+                <field name="max_uses"/>
+                <field name="valid_until"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="runodoo_coupon_form" model="ir.ui.view">
+        <field name="name">runodoo.coupon.form</field>
+        <field name="model">runodoo.coupon</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="discount"/>
+                            <field name="months"/>
+                            <field name="note"/>
+                        </group>
+                        <group>
+                            <field name="max_uses"/>
+                            <field name="use_count"/>
+                            <field name="valid_until"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="subscription_ids">
+                        <list>
+                            <field name="partner_id"/>
+                            <field name="product_id"/>
+                            <field name="state"/>
+                            <field name="paid_until"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_runodoo_coupons" model="ir.actions.act_window">
+        <field name="name">Coupons</field>
+        <field name="res_model">runodoo.coupon</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

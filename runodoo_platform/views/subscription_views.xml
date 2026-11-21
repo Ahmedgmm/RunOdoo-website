@@ -38,6 +38,7 @@
                             <field name="product_id" readonly="state != 'draft'"/>
                             <field name="period"/>
                             <field name="discount" readonly="state != 'draft'"/>
+                            <field name="coupon_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>

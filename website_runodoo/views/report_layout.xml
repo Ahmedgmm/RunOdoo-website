@@ -4,7 +4,7 @@
          document title on the right, a quiet footer with the page number. Tables (not flex): wkhtmltopdf. -->
     <template id="external_layout_runodoo">
         <div t-attf-class="header o_company_#{company.id}_layout ro-header">
-            <table class="ro-head-table">
+            <table class="ro-head-table o_ignore_layout_styling">
                 <tr>
                     <td class="ro-head-logo">
                         <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
@@ -42,7 +42,7 @@
              t-att-data-oe-lang="o and o.env.context.get('lang')">
             <!-- Needed to split a multi-invoice PDF: the heading tag identifies each document. -->
             <h3 t-if="report_type == 'pdf'" t-out="layout_document_title or ' '" class="opacity-0 mb-0 h-0"/>
-            <table class="ro-top">
+            <table class="ro-top o_ignore_layout_styling">
                 <tr>
                     <td class="ro-top-address">
                         <t t-if="address and not hide_recipient_address">
@@ -60,7 +60,8 @@
         </div>
 
         <div t-attf-class="footer o_company_#{company.id}_layout ro-footer">
-            <table class="ro-foot-table">
+            <div class="ro-foot-rule"/>
+            <table class="ro-foot-table o_ignore_layout_styling">
                 <tr>
                     <td class="ro-foot-text">
                         <div t-if="not is_html_empty(company.report_footer)" t-field="company.report_footer"/>
@@ -79,6 +80,23 @@
         <field name="name">Runodoo</field>
         <field name="sequence">1</field>
         <field name="view_id" ref="website_runodoo.external_layout_runodoo"/>
+    </record>
+
+    <!-- A4 with a shorter header band than the default (52 mm) — the Runodoo header is one logo row. -->
+    <record id="paperformat_runodoo_a4" model="report.paperformat">
+        <field name="name">A4 (Runodoo)</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">36</field>
+        <field name="dpi">90</field>
+        <field name="css_margins" eval="True"/>
     </record>
 
     <!-- Invoice body: clearer labels, the amount due (or a Paid mark) next to the dates. -->

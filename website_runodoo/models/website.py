@@ -3,7 +3,7 @@ from odoo.tools import BinaryBytes, file_open
 
 FAVICON = 'website_runodoo/static/src/img/favicon.png'
 LOGO = 'website_runodoo/static/src/img/runodoo-logo.png'
-REPORT_BRANDING = '1'   # bump to re-apply _runodoo_apply_report_branding on the next upgrade
+REPORT_BRANDING = '2'   # bump to re-apply _runodoo_apply_report_branding on the next upgrade
 
 
 class Website(models.Model):
@@ -28,10 +28,10 @@ class Website(models.Model):
             'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
             'auth_signup_uninvited': 'b2c',   # free sign-up on /web/signup: the trial starts there
         })
-        self._runodoo_apply_report_branding(website.company_id, logo)
+        self._runodoo_apply_report_branding(website.company_id)
 
     @api.model
-    def _runodoo_apply_report_branding(self, company, logo):
+    def _runodoo_apply_report_branding(self, company):
         """Invoices / documents: Runodoo logo, layout and colours on the website's company.
 
         Applied once per REPORT_BRANDING version (a config parameter remembers it), so later changes made in
@@ -40,12 +40,15 @@ class Website(models.Model):
         icp = self.env['ir.config_parameter'].sudo()
         if not company or icp.get_str('website_runodoo.report_branding') == REPORT_BRANDING:
             return
+        with file_open(LOGO, 'rb') as f:
+            logo = f.read()
         vals = {
             'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
             'external_report_layout_id': self.env.ref('website_runodoo.external_layout_runodoo').id,
             'primary_color': '#0b3558',
             'secondary_color': '#006bff',
             'report_tables_id': 'light',
+            'paperformat_id': self.env.ref('website_runodoo.paperformat_runodoo_a4').id,
         }
         if company.name in (False, '', 'My Company'):
             vals['name'] = 'Runodoo'

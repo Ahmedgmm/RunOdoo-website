@@ -1,7 +1,7 @@
 {
     'name': 'Runodoo Website',
     'summary': 'Runodoo.online animated homepage (Living Stack scroll journey).',
-    'version': '20.0.1.6.0',
+    'version': '20.0.1.6.1',
     'category': 'Website/Website',
     'author': 'Run Odoo',
     'license': 'LGPL-3',

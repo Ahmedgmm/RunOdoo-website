@@ -9,6 +9,13 @@
     .ro-plan-price { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
     .ro-plan-price b { font-size: 32px; white-space: nowrap; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
     .ro-plan-price span { color: var(--slate); font-weight: 600; white-space: nowrap; }
+    .ro-plan-was { margin-top: 12px; display: flex; align-items: center; gap: 8px; color: var(--slate); font-size: 15px; }
+    .ro-plan-was em { font-style: normal; font-weight: 700; font-size: 12px; color: #fff; background: var(--magenta);
+        padding: 2px 8px; border-radius: 999px; }
+    .ro-plan-was + .ro-plan-price { margin-top: 2px; }
+    .ro-plan-alt s { margin-left: 4px; }
+    .ro-offer { margin: 0 auto 28px; max-width: 640px; text-align: center; background: var(--badge); color: var(--ink);
+        border-radius: 999px; padding: 10px 20px; font-size: 15px; }
     .ro-plan-alt { margin-top: 4px; color: var(--slate); font-size: 14px; }
     .ro-plan-desc { margin-top: 12px; color: var(--slate); font-size: 15px; }
     .ro-plan ul { list-style: none; padding: 0; margin: 22px 0 28px; display: grid; gap: 10px; flex-grow: 1; align-content: start; }

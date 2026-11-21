@@ -26,6 +26,10 @@ class RunodooSubscription(models.Model):
     product_id = fields.Many2one('product.product', "Plan", required=True, tracking=True,
                                  domain=[('oh_plan', '!=', False)])
     period = fields.Selection(related='product_id.oh_period', store=True)
+    discount = fields.Float(
+        "Discount (%)", tracking=True,
+        default=lambda self: self.env['runodoo.platform.api']._discount(),
+        help="Taken off every invoice of this subscription: the plan discount when it started (Settings → Run Odoo).")
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     state = fields.Selection([('draft', "Draft"), ('active', "Active"), ('past_due', "Past due"),
                               ('cancelled', "Cancelled")], default='draft', required=True, tracking=True)
@@ -111,6 +115,7 @@ class RunodooSubscription(models.Model):
                 'quantity': 1,
                 # the plan's price is in its own currency (e.g. USD): never converted from the company currency
                 'price_unit': plan.lst_price,
+                'discount': self.discount,   # shown on the invoice: list price, then the discount
             })],
         })
         move.action_post()

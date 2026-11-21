@@ -9,6 +9,9 @@
         <t t-set="ro_cta_href" t-value="'/my/platform' if not request.env.user._is_public() else '/web/signup?redirect=%2Fmy%2Fplatform'"/>
         <t t-set="ro_plans" t-value="website._runodoo_pricing()"/>
         <t t-set="ro_trial_days" t-value="website._runodoo_trial_days()"/>
+        <p t-if="ro_plans and ro_plans[0]['pct']" class="ro-offer">
+            <b t-out="ro_plans[0]['label']"/> — <t t-out="'%g' % ro_plans[0]['pct']"/>% off every plan, for as long as you stay subscribed.
+        </p>
         <div class="ro-plans">
             <article class="ro-plan ro-plan-trial">
                 <h3>Free trial</h3>
@@ -23,12 +26,17 @@
             <article t-foreach="ro_plans" t-as="card" t-attf-class="ro-plan #{'ro-plan-hl' if card['highlight'] else ''}">
                 <span t-if="card['highlight']" class="ro-plan-badge">Most popular</span>
                 <h3 t-out="card['name']"/>
+                <p t-if="card['pct']" class="ro-plan-was">
+                    <s t-out="card['main'].list_price" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/>
+                    <em><t t-out="'%g' % card['pct']"/>% off</em>
+                </p>
                 <p class="ro-plan-price">
-                    <b t-out="card['main'].list_price" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/>
+                    <b t-out="card['price']" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/>
                     <span t-out="'/ year' if card['main'].oh_period == 'year' else '/ month'"/>
                 </p>
-                <p t-if="card['month'] and card['year']" class="ro-plan-alt">
-                    or <t t-out="card['year'].list_price" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/> / year
+                <p t-if="card['year_price']" class="ro-plan-alt">
+                    or <t t-out="card['year_price']" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/> / year
+                    <s t-if="card['pct']" t-out="card['year'].list_price" t-options="{'widget': 'monetary', 'display_currency': card['currency']}"/>
                 </p>
                 <p t-if="card['main'].description_sale" class="ro-plan-desc" t-out="card['main'].description_sale"/>
                 <ul>

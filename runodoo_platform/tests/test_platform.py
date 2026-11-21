@@ -41,6 +41,7 @@ class TestPlatform(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env['ir.config_parameter'].sudo().set_str('runodoo_platform.discount_percent', '0')   # tests opt in
         cls.partner = cls.env['res.partner'].create({'name': 'Buyer Co', 'email': 'buyer@example.com',
                                                      'is_company': True})
         cls.plan = cls.env['product.product'].create({
@@ -83,12 +84,25 @@ class TestPlatform(TransactionCase):
         self.assertEqual(sorted(set(plans.mapped('oh_projects'))), [1, 3, 5])
         self.assertTrue(all(p.oh_workers >= p.oh_projects for p in plans))
         usd = self.env.ref('base.USD')
+        self.env['ir.config_parameter'].sudo().set_str('runodoo_platform.discount_percent', '0')
         starter = self.env.ref('runodoo_platform.plan_starter').product_variant_id
         sub = self.env['runodoo.subscription'].create({'partner_id': self.partner.id, 'product_id': starter.id})
         with patch(API, side_effect=FakePlatform()):
             sub.action_start()
         move = sub._open_invoice()
         self.assertEqual((move.currency_id, move.amount_total), (usd, 29))   # USD, no conversion, no tax
+
+    def test_discount_kept_by_the_subscription(self):
+        ICP = self.env['ir.config_parameter'].sudo()
+        ICP.set_str('runodoo_platform.discount_percent', '40')
+        starter = self.env.ref('runodoo_platform.plan_starter').product_variant_id
+        sub = self.env['runodoo.subscription'].create({'partner_id': self.partner.id, 'product_id': starter.id})
+        self.assertEqual(sub.discount, 40)
+        ICP.set_str('runodoo_platform.discount_percent', '0')              # offer ends: this one keeps 40 %
+        with patch(API, side_effect=FakePlatform()):
+            sub.action_start()
+        line = sub._open_invoice().invoice_line_ids
+        self.assertEqual((line.price_unit, line.discount, line.price_subtotal), (29, 40, 17.4))
 
     def test_trial_invite_then_account_created(self):
         fake = FakePlatform()

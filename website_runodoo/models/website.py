@@ -38,10 +38,15 @@ class Website(models.Model):
             card = cards.setdefault(p.oh_plan, {'plan': p.oh_plan, 'month': None, 'year': None})
             if not card[p.oh_period or 'month']:
                 card[p.oh_period or 'month'] = p
+        api = self.env['runodoo.platform.api'].sudo()
+        pct = api._discount()
         out = []
         for card in cards.values():
             main = card['month'] or card['year']
+            off = lambda p: p and round(p.list_price * (100 - pct) / 100, 2)  # noqa: E731
             out.append({**card, 'main': main, 'name': main.name, 'lines': main._oh_lines(),
+                        'pct': pct, 'label': api._param('discount_label', 'Launch offer') if pct else '',
+                        'price': off(main), 'year_price': off(card['year']) if card['month'] else None,
                         'highlight': any(p and p.oh_highlight for p in (card['month'], card['year'])),
                         'currency': main.oh_currency_id or main.currency_id})
         return out

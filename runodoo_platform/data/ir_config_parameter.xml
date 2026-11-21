@@ -9,6 +9,15 @@
         <field name="key">runodoo_platform.trial_days</field>
         <field name="value">15</field>
     </record>
+    <!-- launch offer: 40 % off every plan for new subscriptions (Settings → Run Odoo; 0 ends it) -->
+    <record id="param_discount_percent" model="ir.config_parameter">
+        <field name="key">runodoo_platform.discount_percent</field>
+        <field name="value">40</field>
+    </record>
+    <record id="param_discount_label" model="ir.config_parameter">
+        <field name="key">runodoo_platform.discount_label</field>
+        <field name="value">Launch offer</field>
+    </record>
     <record id="param_grace_days" model="ir.config_parameter">
         <field name="key">runodoo_platform.grace_days</field>
         <field name="value">7</field>

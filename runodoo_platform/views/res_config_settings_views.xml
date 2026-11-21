@@ -26,6 +26,13 @@
                         <setting id="runodoo_trial" string="Free trial" help="Days, counted from sign-up; no card asked">
                             <field name="runodoo_trial_days"/>
                         </setting>
+                        <setting id="runodoo_discount" string="Plan discount"
+                                 help="Off every plan for new subscriptions (0 = none); kept for the life of a subscription">
+                            <div class="content-group">
+                                <div class="row mt8"><label for="runodoo_discount" class="col-lg-4 o_light_label"/><field name="runodoo_discount"/></div>
+                                <div class="row"><label for="runodoo_discount_label" class="col-lg-4 o_light_label"/><field name="runodoo_discount_label"/></div>
+                            </div>
+                        </setting>
                         <setting id="runodoo_grace" string="Grace before suspend" help="Days an invoice may be overdue before the account is suspended">
                             <field name="runodoo_grace_days"/>
                         </setting>

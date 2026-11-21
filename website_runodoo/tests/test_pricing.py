@@ -22,6 +22,16 @@ class TestPricing(HttpCase):
         self.assertEqual((cards[0]['month'], cards[0]['year']), (self.month, self.year))
         self.assertTrue(cards[0]['highlight'])
 
+    def test_discount_shown_with_list_price(self):
+        self.env['ir.config_parameter'].sudo().set_str('runodoo_platform.discount_percent', '40')
+        card = self.env.ref('base.default_website')._runodoo_pricing()[0]
+        self.assertEqual((card['price'], card['year_price'], card['pct']), (450, 4500, 40))
+        r = self.url_open('/pricing')
+        self.assertIn('40% off', r.text)
+        self.assertIn('<s', r.text)
+        self.env['ir.config_parameter'].sudo().set_str('runodoo_platform.discount_percent', '0')
+        self.assertNotIn('% off', self.url_open('/pricing').text)
+
     def test_pricing_page_and_homepage(self):
         for path in ('/pricing', '/'):
             r = self.url_open(path)

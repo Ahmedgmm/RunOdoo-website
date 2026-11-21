@@ -57,6 +57,15 @@ class RunodooPlatformApi(models.AbstractModel):
         return self.env['ir.config_parameter'].sudo().get_str(PARAM + key, default) or default
 
     @api.model
+    def _discount(self):
+        """Current plan discount in % (0–90) for new subscriptions (Settings → Run Odoo)."""
+        try:
+            pct = float(self._param('discount_percent', '0'))
+        except ValueError:
+            return 0.0
+        return min(max(pct, 0.0), 90.0)
+
+    @api.model
     def _int_param(self, key, default):
         return self.env['ir.config_parameter'].sudo().get_int(PARAM + key, default) or default
 

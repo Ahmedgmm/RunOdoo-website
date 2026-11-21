@@ -120,7 +120,8 @@
                                         <div class="small text-muted" t-out="' · '.join(plan.product_tmpl_id._oh_lines())"/>
                                     </div>
                                     <div class="text-nowrap">
-                                        <t t-out="plan.list_price" t-options="{'widget': 'monetary', 'display_currency': plan.oh_currency_id or plan.currency_id}"/>
+                                        <s t-if="discount" class="text-muted small" t-out="plan.list_price" t-options="{'widget': 'monetary', 'display_currency': plan.oh_currency_id or plan.currency_id}"/>
+                                        <t t-out="round(plan.list_price * (100 - discount) / 100, 2)" t-options="{'widget': 'monetary', 'display_currency': plan.oh_currency_id or plan.currency_id}"/>
                                         / <t t-out="'year' if plan.oh_period == 'year' else 'month'"/>
                                     </div>
                                     <form t-if="not subscription" action="/my/platform/subscribe" method="post">

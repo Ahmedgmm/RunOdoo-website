@@ -44,6 +44,8 @@ class RunodooPortal(http.Controller):
             'can_open': bool(partner.oh_account_id) and partner.oh_status == 'active',
             'live_invite': partner._oh_live_invite(),
             'trial_days': request.env['runodoo.platform.api'].sudo()._int_param('trial_days', 15),
+            # an active subscription keeps its own discount; new ones get the current offer
+            'discount': active.discount if active else request.env['runodoo.platform.api'].sudo()._discount(),
         })
 
     @http.route('/my/platform/open', type='http', auth='user', website=True, methods=['POST'])

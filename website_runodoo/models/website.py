@@ -10,7 +10,7 @@ class Website(models.Model):
 
     @api.model
     def _runodoo_apply_branding(self):
-        """Set the Runodoo favicon + logo on the default website.
+        """Set the Runodoo favicon + logo on the default website, and allow free sign-up.
 
         Called from data/website_data.xml on every install/upgrade. A <record> can't do it:
         base.default_website is a noupdate record, so upgrades silently skip it.
@@ -25,4 +25,5 @@ class Website(models.Model):
         website.write({
             'favicon': BinaryBytes(favicon, filename='favicon.png'),
             'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
+            'auth_signup_uninvited': 'b2c',   # free sign-up on /web/signup: the trial starts there
         })

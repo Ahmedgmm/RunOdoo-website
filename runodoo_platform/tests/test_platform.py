@@ -148,3 +148,27 @@ class TestHooks(HttpCase):
         self.assertIn('action="https://panel.test/sso"', r.text)
         self.assertIn('name="token" value="tok123"', r.text)
         self.assertNotIn('tok123', r.url)
+
+
+@tagged('post_install', '-at_install')
+class TestAuthPages(HttpCase):
+
+    def test_split_layout_and_open_signup(self):
+        for path, title in (('/web/login', 'Welcome back'), ('/web/signup', 'Start your free trial'),
+                            ('/web/reset_password', 'Reset your password')):
+            r = self.url_open(path)
+            self.assertEqual(r.status_code, 200, path)
+            self.assertIn('class="su-split"', r.text, path)
+            self.assertIn(title, r.text, path)
+            self.assertIn('name="csrf_token"', r.text, path)       # Odoo's own form is inside
+        self.assertIn('name="confirm_password"', self.url_open('/web/signup').text)
+
+    def test_portal_user_lands_on_platform_page(self):
+        self.env['res.users'].create({'name': 'Portal Q', 'login': 'portal_q', 'password': 'portal_q_pw1',
+                                      'group_ids': [(6, 0, [self.env.ref('base.group_portal').id])]})
+        page = self.url_open('/web/login')
+        csrf = page.text.split('name="csrf_token" value="')[1].split('"')[0]
+        r = self.url_open('/web/login', data={'login': 'portal_q', 'password': 'portal_q_pw1', 'csrf_token': csrf},
+                          allow_redirects=False)
+        self.assertIn(r.status_code, (302, 303))
+        self.assertTrue(r.headers['Location'].endswith('/my/platform'), r.headers['Location'])

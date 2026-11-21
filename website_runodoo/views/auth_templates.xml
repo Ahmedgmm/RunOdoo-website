@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- /web/login, /web/signup, /web/reset_password: Calendly-style split (form left, 3D glass stack right).
+         Odoo's own forms stay as they are (t-out="0": fields, CSRF, captcha, show-password); only the frame and
+         the styling change. Styles: static/src/auth/auth.css (scoped to body.su), stack: auth-stack.js. -->
+    <template id="auth_login_layout" inherit_id="website.login_layout" name="Runodoo: sign-in layout" priority="30">
+        <xpath expr="//t[@t-call='website.layout']" position="replace">
+            <t t-set="su_path" t-value="request.httprequest.path"/>
+            <t t-set="su_page" t-value="'signup' if su_path.startswith('/web/signup') else ('reset' if su_path.startswith('/web/reset_password') else 'login')"/>
+            <t t-set="su_trial" t-value="request.env['ir.config_parameter'].sudo().get_int('runodoo_platform.trial_days', 15) or 15"/>
+            <t t-set="head">
+                <t t-out="head"/>
+                <link rel="icon" type="image/png" t-attf-href="/web/image/website/#{website.id}/favicon"/>
+                <link rel="stylesheet" href="/website_runodoo/static/src/auth/auth.css?v=2"/>
+                <script type="module" src="/website_runodoo/static/src/auth/auth-stack.js?v=2"/>
+            </t>
+            <t t-call="web.frontend_layout" no_header="True" no_footer="True" body_classname.f="su" head="head">
+                <main class="su-split">
+                    <section class="su-left">
+                        <a class="su-brand" href="/">
+                            <img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="36" height="36"/><span>Runodoo<em>.online</em></span>
+                        </a>
+                        <div class="su-form-wrap">
+                            <t t-if="su_page == 'signup'">
+                                <span class="su-badge"><t t-out="su_trial"/> days free · no credit card</span>
+                                <h1>Start your free trial</h1>
+                                <p class="su-sub">Create your account, then connect GitHub: every branch becomes its own Odoo, with daily backups.</p>
+                            </t>
+                            <t t-elif="su_page == 'reset'">
+                                <h1>Reset your password</h1>
+                                <p class="su-sub">Enter the e-mail you signed up with and we'll send you a link.</p>
+                            </t>
+                            <t t-else="">
+                                <h1>Welcome back</h1>
+                                <p class="su-sub">Sign in to see your plan and invoices, and to open your control panel.</p>
+                            </t>
+                            <div class="oe_website_login_container" t-out="0"/>
+                            <p t-if="su_page == 'signup'" class="su-fine">By signing up you agree to our terms and privacy policy. We only e-mail you about your account.</p>
+                        </div>
+                    </section>
+
+                    <aside class="su-right" aria-label="What you get">
+                        <i class="su-blob b1" aria-hidden="true"/><i class="su-blob b2" aria-hidden="true"/>
+                        <div class="su-stage">
+                            <canvas id="su-gl" aria-hidden="true"/>
+                            <img class="su-fallback" src="/website_runodoo/static/src/img/runodoo-mark-220.png" alt="" width="220" height="220"/>
+                            <ul class="su-layers" aria-hidden="true">
+                                <li data-i="2"><b>Code</b>push a branch</li>
+                                <li data-i="1"><b>Build</b>we build &amp; test it</li>
+                                <li data-i="0"><b>Run</b>live, backed up</li>
+                            </ul>
+                        </div>
+                        <div class="su-pitch">
+                            <h2>Your Odoo, hosted and looked after.</h2>
+                            <ul class="su-checks">
+                                <li>A ready Odoo in minutes — no servers to manage</li>
+                                <li>Daily backups you can restore in one click</li>
+                                <li>A safe test copy for every change before it goes live</li>
+                            </ul>
+                            <div class="su-card" aria-hidden="true">
+                                <span class="su-card-dot"/>
+                                <div><b>shop · production</b><small>Running · backed up 2 h ago</small></div>
+                                <span class="su-card-pill">Odoo 20</span>
+                            </div>
+                        </div>
+                    </aside>
+                </main>
+            </t>
+        </xpath>
+    </template>
+</odoo>

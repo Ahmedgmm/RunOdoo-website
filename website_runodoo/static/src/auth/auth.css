@@ -1,0 +1,128 @@
+/* Sign-in, sign-up and reset-password pages (views/auth_templates.xml): Calendly-style split, light form left
+   (Odoo's own forms, restyled), dark brand panel right with the 3D glass stack (auth-stack.js). Tokens:
+   Data/DESIGN.md + the logo palette. Everything is scoped to body.su so the rest of the site is untouched.
+   Ported from the panel's sign-up page (odoo-host branch claude/open-signup). */
+body.su {
+  --ink: #0b3558; --slate: #476788; --mist: #a6bbd1; --cloud: #f8f9fb; --paper: #fff; --pebble: #f0f3f8;
+  --hair: #d4e0ed; --blue: #006bff; --blue-d: #0057d6; --bad: #c62a47;
+  --mint: #7ef0c8; --cyan: #4fc8e8; --peri: #8fa4f0; --violet: #b28cf0; --night: #0e2238; --night-2: #111419;
+  --font: 'Manrope', 'Gilroy', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --shadow: rgba(71, 103, 136, .04) 0 4px 5px, rgba(71, 103, 136, .08) 0 12px 32px;
+  color-scheme: light;
+}
+body.su { margin: 0; font: 16px/1.5 var(--font); color: var(--ink); background: var(--paper) !important;
+  -webkit-font-smoothing: antialiased; }
+body.su #wrapwrap { min-height: 100vh; }
+body.su a { color: var(--blue); text-decoration: none; font-weight: 600; }
+body.su a:hover { text-decoration: underline; }
+
+.su-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 100vh; }
+
+/* ---------- left: the form ---------- */
+.su-left { display: flex; flex-direction: column; padding: 32px 56px 40px; background: var(--paper); }
+.su-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 700; font-size: 20px; }
+.su-brand:hover { text-decoration: none; }
+.su-brand em { font-style: normal; color: var(--slate); font-weight: 500; }
+.su-form-wrap { width: 100%; max-width: 440px; margin: auto; padding: 48px 0 24px; }
+.su-badge { display: inline-block; padding: 6px 12px; border-radius: 9999px; background: var(--pebble);
+  color: #004eba; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+body.su h1 { font-size: 38px; line-height: 1.21; font-weight: 700; margin: 0 0 12px; letter-spacing: -.01em; }
+.su-sub { color: var(--slate); font-size: 18px; line-height: 1.55; margin: 0 0 32px; }
+.su-sub b { color: var(--ink); }
+
+/* Odoo's login / signup / reset forms */
+body.su .su-form-wrap form { display: grid; gap: 4px; width: 100%; max-width: none; margin: 0; }
+body.su .su-form-wrap .mb-3 { margin-bottom: 14px !important; }
+body.su .su-form-wrap .form-label, body.su .su-form-wrap .col-form-label { font-size: 14px; font-weight: 600;
+  color: var(--ink); margin-bottom: 6px; padding: 0; }
+body.su .su-form-wrap .form-control { height: 52px; padding: 0 16px; font: inherit; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--hair); border-radius: 8px; box-shadow: none;
+  transition: border-color .15s, box-shadow .15s; }
+body.su .su-form-wrap .form-control::placeholder { color: var(--mist); }
+body.su .su-form-wrap .form-control:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0, 107, 255, .15); }
+body.su .su-form-wrap .input-group .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+body.su .su-form-wrap .o_show_password { border-color: var(--hair) !important; border-radius: 0 8px 8px 0;
+  color: var(--slate); padding: 0 14px; background: var(--paper); }
+body.su .su-form-wrap .btn-primary { height: 52px; border: 0; border-radius: 8px; background: var(--blue); color: #fff;
+  font: 600 18px var(--font); transition: background .15s, transform .15s; }
+body.su .su-form-wrap .btn-primary:hover { background: var(--blue-d); }
+body.su .su-form-wrap .btn-primary:active { transform: translateY(1px); }
+body.su .su-form-wrap .btn-link { color: var(--blue); font-weight: 600; font-size: 14px; text-decoration: none; padding: 0; }
+body.su .su-form-wrap .oe_login_buttons { padding-top: 12px !important; gap: 10px; }
+body.su .su-form-wrap .alert { margin: 4px 0 8px; padding: 12px 14px; border: 0; border-radius: 8px; font-size: 14px;
+  font-weight: 600; }
+body.su .su-form-wrap .alert-danger { background: #fdeef1; color: var(--bad); }
+body.su .su-form-wrap .alert-success { background: #e9f9f2; color: #11734a; }
+body.su .su-form-wrap .o_caps_lock_warning label + a { font-size: 13px; }
+.su-or { display: flex; align-items: center; gap: 12px; margin: 28px 0 16px; color: var(--mist); font-size: 13px;
+  text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.su-or::before, .su-or::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
+.su-gh { display: flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 16px;
+  border: 1px solid var(--hair); border-radius: 8px; color: var(--slate); font-size: 15px; font-weight: 600;
+  background: var(--cloud); }
+.su-gh svg { width: 20px; height: 20px; fill: var(--ink); flex: none; }
+.su-fine { color: var(--slate); font-size: 13px; line-height: 1.5; margin: 20px 0 0; }
+.su-alt { margin: 32px 0 0; padding-top: 24px; border-top: 1px solid var(--pebble); color: var(--slate); font-size: 15px; }
+
+.su-sent-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--mint), var(--cyan) 45%, var(--peri) 75%, var(--violet)); box-shadow: var(--shadow); }
+.su-sent-icon svg { width: 34px; height: 34px; fill: none; stroke: #fff; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.su-steps { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 10px; }
+.su-steps li { display: flex; align-items: center; gap: 12px; color: var(--slate); font-size: 15px; font-weight: 500; }
+.su-steps b { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: 13px;
+  border: 1px solid var(--hair); color: var(--slate); background: var(--paper); }
+.su-steps .done b { background: var(--ink); border-color: var(--ink); color: #fff; }
+.su-steps .now { color: var(--ink); font-weight: 700; }
+.su-steps .now b { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 0 0 4px rgba(0, 107, 255, .15); }
+.su-sent + .su-error, .su-sent ~ .su-form { margin-top: 28px; }
+
+/* ---------- right: brand panel with the 3D stack ---------- */
+.su-right { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
+  padding: 48px 56px; color: #eaf2ff;
+  background: radial-gradient(120% 80% at 80% 0%, #17365a 0%, var(--night) 45%, var(--night-2) 100%); }
+.su-blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; pointer-events: none; }
+.su-blob.b1 { width: 420px; height: 420px; right: -120px; top: -80px; background: #e55cff; opacity: .28; }
+.su-blob.b2 { width: 460px; height: 460px; left: -160px; bottom: -140px; background: #0099ff; opacity: .32; }
+.su-stage { position: relative; height: min(48vh, 440px); margin: -16px -24px 8px; }
+#su-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.su-fallback { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 220px; height: auto; }
+.su-gl-on .su-fallback { display: none; }
+.su-layers { list-style: none; margin: 0; padding: 0; position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  display: grid; gap: 14px; }
+.su-layers li { display: grid; padding: 8px 14px; border-radius: 10px; font-size: 12px; color: rgba(234, 242, 255, .55);
+  border: 1px solid rgba(255, 255, 255, .08); background: rgba(255, 255, 255, .03); backdrop-filter: blur(6px);
+  transition: color .4s, border-color .4s, background .4s, transform .4s; }
+.su-layers b { font-size: 14px; color: rgba(234, 242, 255, .8); }
+.su-layers li.on { color: #eaf2ff; border-color: rgba(126, 240, 200, .5); background: rgba(126, 240, 200, .08);
+  transform: translateX(-6px); }
+.su-layers li.on b { color: var(--mint); }
+
+.su-pitch { position: relative; max-width: 520px; }
+.su-pitch h2 { font-size: 34px; line-height: 1.2; font-weight: 700; margin: 0 0 20px; color: #fff; letter-spacing: -.01em; }
+.su-checks { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 12px; }
+.su-checks li { position: relative; padding-left: 32px; font-size: 16px; color: rgba(234, 242, 255, .82); }
+.su-checks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--mint), var(--cyan)); }
+.su-checks li::after { content: ""; position: absolute; left: 7px; top: 6px; width: 5px; height: 9px;
+  border: solid var(--night); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.su-card { display: flex; align-items: center; gap: 14px; max-width: 380px; padding: 16px 18px; border-radius: 16px;
+  background: var(--paper); color: var(--ink); box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
+.su-card div { display: grid; flex: 1; }
+.su-card b { font-size: 15px; }
+.su-card small { color: var(--slate); font-size: 13px; }
+.su-card-dot { width: 10px; height: 10px; border-radius: 50%; background: #1fbf75; box-shadow: 0 0 0 4px rgba(31, 191, 117, .18); }
+.su-card-pill { padding: 4px 10px; border-radius: 9999px; background: var(--pebble); color: #004eba; font-size: 12px; font-weight: 700; }
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 991px) {
+  .su-split { grid-template-columns: 1fr; }
+  .su-left { padding: 24px 16px 32px; }
+  .su-form-wrap { padding-top: 32px; }
+  body.su h1 { font-size: 32px; }
+  .su-sub { font-size: 16px; margin-bottom: 24px; }
+  .su-right { padding: 32px 16px 40px; }
+  .su-stage { height: 300px; margin: 0 -16px; }
+  .su-layers { right: 0; gap: 10px; }
+  .su-pitch h2 { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .su-layers li { transition: none; } }

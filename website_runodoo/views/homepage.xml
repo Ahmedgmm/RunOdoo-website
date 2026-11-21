@@ -7,7 +7,8 @@
             <t t-set="no_footer" t-value="True"/>
         </xpath>
         <xpath expr="//div[@id='wrap']" position="replace">
-<t t-set="ro_trial" t-value="'https://app.runodoo.online/signup'"/>
+<t t-set="ro_trial" t-value="'/web/signup'"/>
+<t t-set="ro_signin" t-value="'/web/login'"/>
 <t t-set="ro_support" t-value="'/contactus'"/>
 <div id="wrap" class="ro-home" data-ro-home="1">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -23,7 +24,7 @@
       <a href="#ro-faq">FAQ</a>
     </nav>
     <div class="ro-nav-cta">
-      <a class="ro-link" href="https://app.runodoo.online/login">Sign in</a>
+      <a class="ro-link" t-att-href="ro_signin">Sign in</a>
       <a class="ro-btn ro-btn-ink ro-btn-sm" t-att-href="ro_trial">Start free trial</a>
     </div>
   </div>
@@ -495,7 +496,7 @@
       <p>Odoo hosting, looked after.</p>
     </div>
     <div><h4>Product</h4><a href="#ro-how">How it works</a><a href="#ro-peace">Backups &amp; safety</a><a href="#ro-dev">For developers</a></div>
-    <div><h4>Get started</h4><a t-att-href="ro_trial">Free trial</a><a t-att-href="ro_support">Book support</a><a href="https://app.runodoo.online/login">Sign in</a></div>
+    <div><h4>Get started</h4><a t-att-href="ro_trial">Free trial</a><a t-att-href="ro_support">Book support</a><a t-att-href="ro_signin">Sign in</a></div>
     <div><h4>Help</h4><a href="#ro-faq">FAQ</a><a t-att-href="ro_support">Contact</a></div>
   </div>
   <div class="ro-wrap ro-foot-legal">© <span class="ro-year">2026</span> Runodoo · Odoo is a trademark of Odoo S.A.</div>
@@ -506,7 +507,7 @@
 <script src="/website_runodoo/static/lib/gsap/SplitText.min.js"></script>
 </div>
 <script type="importmap">{"imports": {"three": "/website_runodoo/static/lib/three/three.module.min.js"}}</script>
-<script type="module" src="/website_runodoo/static/src/js/home.js?v=10"/>
+<script type="module" src="/website_runodoo/static/src/js/home.js?v=11"/>
         </xpath>
     </template>
 </odoo>

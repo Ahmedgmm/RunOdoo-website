@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_platform_events" model="ir.cron">
+        <field name="name">Run Odoo: handle platform events</field>
+        <field name="model_id" ref="model_runodoo_platform_event"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+    </record>
+    <record id="ir_cron_subscription_invoice" model="ir.cron">
+        <field name="name">Run Odoo: invoice hosting subscriptions</field>
+        <field name="model_id" ref="model_runodoo_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_invoice()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+    <record id="ir_cron_subscription_overdue" model="ir.cron">
+        <field name="name">Run Odoo: suspend overdue hosting accounts</field>
+        <field name="model_id" ref="model_runodoo_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_overdue()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+    <record id="ir_cron_subscription_sync" model="ir.cron">
+        <field name="name">Run Odoo: retry platform updates after payment</field>
+        <field name="model_id" ref="model_runodoo_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_paid()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+    </record>
+</odoo>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- the big box on /my/home -->
+    <template id="portal_my_home_platform" name="Run Odoo: control panel box" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='oe_structure_portal_my_home_1']" position="after">
+            <t t-set="oh_partner" t-value="request.env.user.partner_id.commercial_partner_id.sudo()"/>
+            <div class="o_runodoo_box card border-0 text-bg-primary mt-3 shadow-sm">
+                <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3 p-4">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-1">Run Odoo control panel</h3>
+                        <p class="mb-0 opacity-75" t-if="oh_partner.oh_account_id">
+                            Connected as <b>@<t t-out="oh_partner.oh_login"/></b>
+                            <t t-if="oh_partner.oh_plan"> · plan <t t-out="oh_partner.oh_plan"/></t>
+                        </p>
+                        <p class="mb-0 opacity-75" t-else="">Every Git branch becomes its own Odoo environment.</p>
+                    </div>
+                    <form t-if="oh_partner.oh_account_id and oh_partner.oh_status == 'active'"
+                          action="/my/platform/open" method="post" target="_blank">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Open control panel →</button>
+                    </form>
+                    <a t-else="" href="/my/platform" class="btn btn-light btn-lg fw-bold px-4">
+                        <t t-if="oh_partner.oh_account_id">See account status</t>
+                        <t t-else="">Start free trial</t>
+                    </a>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="portal_breadcrumbs_platform" inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'runodoo_platform'" class="breadcrumb-item active">Hosting</li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_platform" name="Run Odoo: my hosting">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" t-value="False"/>
+            <div class="o_runodoo_platform my-3">
+                <div t-if="error" class="alert alert-danger" role="alert" t-out="error"/>
+                <div t-if="notice" class="alert alert-success" role="status" t-out="notice"/>
+
+                <!-- status + the big button -->
+                <div class="card border-0 text-bg-primary shadow-sm mb-4">
+                    <div class="card-body p-4 d-flex flex-column flex-md-row gap-3 align-items-md-center">
+                        <div class="flex-grow-1">
+                            <h2 class="mb-1">Your hosting</h2>
+                            <t t-if="connected">
+                                <div>GitHub <b>@<t t-out="partner.oh_login"/></b>
+                                    · plan <b t-out="partner.oh_plan or '—'"/>
+                                    · <span t-attf-class="badge #{'text-bg-light' if partner.oh_state == 'active' else 'text-bg-warning'}"
+                                            t-out="partner.oh_state or partner.oh_status"/></div>
+                                <div t-if="partner.oh_expires_at" class="opacity-75 small mt-1">
+                                    <t t-if="partner.oh_plan == 'trial'">Trial ends</t><t t-else="">Paid until</t>
+                                    <t t-out="partner.oh_expires_at[:16]"/> UTC
+                                </div>
+                                <div t-if="partner.oh_delete_after" class="small mt-1">
+                                    Data is deleted after <t t-out="partner.oh_delete_after[:16]"/> UTC unless you choose a plan.
+                                </div>
+                            </t>
+                            <div t-else="" class="opacity-75">Not connected yet: start your free trial
+                                (<t t-out="trial_days"/> days, no card),
+                                then sign in with GitHub.</div>
+                        </div>
+                        <form t-if="can_open" action="/my/platform/open" method="post" target="_blank">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Open control panel →</button>
+                        </form>
+                        <form t-elif="not connected and live_invite" action="/my/platform/connect" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Connect GitHub →</button>
+                        </form>
+                        <form t-elif="not connected" action="/my/platform/trial" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn btn-light btn-lg fw-bold px-4">Start free trial →</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div t-if="unpaid" class="alert alert-warning d-flex align-items-center gap-3">
+                    <div class="flex-grow-1">Invoice <b t-out="unpaid[0].name"/> is waiting for payment
+                        (<t t-out="unpaid[0].amount_residual" t-options="{'widget': 'monetary', 'display_currency': unpaid[0].currency_id}"/>).</div>
+                    <a class="btn btn-primary" t-att-href="unpaid[0].get_portal_url()">Pay now</a>
+                </div>
+
+                <div class="row g-4">
+                    <!-- usage -->
+                    <div class="col-lg-6" t-if="connected">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>Usage</h5>
+                                <table class="table table-sm mb-0">
+                                    <tr t-foreach="[('projects', 'max_projects', 'Projects'), ('envs', 'max_envs', 'Environments'),
+                                                    ('running_envs', 'max_running_envs', 'Running environments'),
+                                                    ('collaborators', 'max_collaborators', 'Collaborators'),
+                                                    ('disk_gb', 'disk_gb', 'Disk (GB)'),
+                                                    ('build_minutes_today', 'build_minutes_per_day', 'Build minutes today')]" t-as="row">
+                                        <td t-out="row[2]"/>
+                                        <td class="text-end"><t t-out="usage.get(row[0], 0)"/> / <t t-out="limits.get(row[1], '—')"/></td>
+                                    </tr>
+                                </table>
+                                <div t-if="partner.oh_over_limit" class="text-danger small mt-2">
+                                    Over the plan: <t t-out="', '.join(partner.oh_over_limit)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- plans -->
+                    <div t-attf-class="#{'col-lg-6' if connected else 'col-12'}">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>Plans</h5>
+                                <p t-if="subscription" class="small">Current: <b t-out="subscription.product_id.name"/>
+                                    <t t-if="subscription.paid_until"> · paid until <t t-out="subscription.paid_until"/></t></p>
+                                <p t-if="not plans" class="text-muted small mb-0">Plans are coming soon.</p>
+                                <div t-foreach="plans" t-as="plan" class="d-flex align-items-center border-top py-2 gap-2">
+                                    <div class="flex-grow-1">
+                                        <b t-out="plan.name"/>
+                                        <div class="small text-muted" t-out="plan.description_sale"/>
+                                    </div>
+                                    <div class="text-nowrap">
+                                        <t t-out="plan.list_price" t-options="{'widget': 'monetary', 'display_currency': plan.currency_id}"/>
+                                        / <t t-out="'year' if plan.oh_period == 'year' else 'month'"/>
+                                    </div>
+                                    <form t-if="not subscription" action="/my/platform/subscribe" method="post">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_id" t-att-value="plan.id"/>
+                                        <button class="btn btn-sm btn-primary">Choose</button>
+                                    </form>
+                                    <span t-elif="subscription.product_id == plan" class="badge text-bg-success">Current</span>
+                                </div>
+                                <a href="/my/invoices" class="d-inline-block mt-3 small">All invoices and payments →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- one-time login link: posted straight to the panel, token in the body only -->
+    <template id="portal_platform_handoff" name="Run Odoo: opening the control panel">
+        &lt;!DOCTYPE html&gt;
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="referrer" content="no-referrer"/>
+                <meta name="robots" content="noindex"/>
+                <title>Opening the control panel…</title>
+                <style>body{font:16px system-ui,sans-serif;max-width:32rem;margin:20vh auto;padding:0 1rem;color:#0b3558}</style>
+            </head>
+            <body>
+                <form id="oh_sso" method="post" t-att-action="url">
+                    <input type="hidden" name="token" t-att-value="token"/>
+                    <p>Opening the control panel…</p>
+                    <noscript><button type="submit">Continue</button></noscript>
+                </form>
+                <script>document.getElementById('oh_sso').submit();</script>
+            </body>
+        </html>
+    </template>
+</odoo>

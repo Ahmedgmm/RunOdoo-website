@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_runodoo" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.runodoo_platform</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Run Odoo" string="Run Odoo" name="runodoo_platform" groups="base.group_system">
+                    <block title="Hosting platform (odoo-host)" name="runodoo_platform_api">
+                        <setting id="runodoo_api" string="Provisioning API"
+                                 help="From `sudo odoohost api-client create runodoo-website --scopes read,provision,sso` on odoo-host">
+                            <div class="content-group">
+                                <div class="row mt8"><label for="runodoo_api_url" class="col-lg-4 o_light_label"/><field name="runodoo_api_url"/></div>
+                                <div class="row"><label for="runodoo_api_key" class="col-lg-4 o_light_label"/><field name="runodoo_api_key" password="True"/></div>
+                                <div class="row"><label for="runodoo_api_secret" class="col-lg-4 o_light_label"/><field name="runodoo_api_secret" password="True"/></div>
+                            </div>
+                        </setting>
+                        <setting id="runodoo_webhook" string="Platform events"
+                                 help="odoo-host posts events to https://&lt;this site&gt;/runodoo/hooks (provisioning_webhook_url)">
+                            <field name="runodoo_webhook_secret" password="True"/>
+                        </setting>
+                    </block>
+                    <block title="Trial and billing" name="runodoo_platform_billing">
+                        <setting id="runodoo_trial" string="Free trial" help="Days, counted from sign-up; no card asked">
+                            <field name="runodoo_trial_days"/>
+                        </setting>
+                        <setting id="runodoo_grace" string="Grace before suspend" help="Days an invoice may be overdue before the account is suspended">
+                            <field name="runodoo_grace_days"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_runodoo_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'runodoo_platform'}</field>
+    </record>
+</odoo>

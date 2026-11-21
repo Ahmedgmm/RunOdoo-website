@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="runodoo_platform_event_list" model="ir.ui.view">
+        <field name="name">runodoo.platform.event.list</field>
+        <field name="model">runodoo.platform.event</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" decoration-danger="state == 'error'" decoration-muted="state == 'ignored'">
+                <field name="delivery_id"/>
+                <field name="at"/>
+                <field name="event"/>
+                <field name="partner_id"/>
+                <field name="account_id"/>
+                <field name="state" widget="badge"/>
+                <field name="attempts"/>
+                <field name="error" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="runodoo_platform_event_form" model="ir.ui.view">
+        <field name="name">runodoo.platform.event.form</field>
+        <field name="model">runodoo.platform.event</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <header>
+                    <button name="action_retry" type="object" string="Retry" invisible="state not in ('error', 'ignored')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="event"/>
+                            <field name="delivery_id"/>
+                            <field name="at"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="account_id"/>
+                            <field name="external_ref"/>
+                            <field name="attempts"/>
+                        </group>
+                    </group>
+                    <field name="error" invisible="not error"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_runodoo_platform_events" model="ir.actions.act_window">
+        <field name="name">Platform events</field>
+        <field name="res_model">runodoo.platform.event</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

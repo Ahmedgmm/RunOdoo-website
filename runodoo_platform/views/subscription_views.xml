@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="runodoo_subscription_list" model="ir.ui.view">
+        <field name="name">runodoo.subscription.list</field>
+        <field name="model">runodoo.subscription</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="state == 'past_due'" decoration-muted="state == 'cancelled'">
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="period"/>
+                <field name="paid_until"/>
+                <field name="next_invoice_date"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" decoration-warning="state == 'past_due'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="runodoo_subscription_form" model="ir.ui.view">
+        <field name="name">runodoo.subscription.form</field>
+        <field name="model">runodoo.subscription</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object" string="Start and invoice" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state == 'cancelled'"
+                            confirm="Stop invoicing? The hosting account keeps running until the paid period ends."/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,past_due"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="product_id" readonly="state != 'draft'"/>
+                            <field name="period"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="paid_until"/>
+                            <field name="next_invoice_date"/>
+                            <field name="suspended_for_payment"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="runodoo_subscription_search" model="ir.ui.view">
+        <field name="name">runodoo.subscription.search</field>
+        <field name="model">runodoo.subscription</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <filter name="running" string="Running" domain="[('state', 'in', ('active', 'past_due'))]"/>
+                <filter name="past_due" string="Past due" domain="[('state', '=', 'past_due')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_runodoo_subscriptions" model="ir.actions.act_window">
+        <field name="name">Subscriptions</field>
+        <field name="res_model">runodoo.subscription</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_running': 1}</field>
+    </record>
+</odoo>

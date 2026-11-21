@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- secrets (api_key, api_secret, webhook_secret) are set in Settings, never here -->
+    <record id="param_api_url" model="ir.config_parameter">
+        <field name="key">runodoo_platform.api_url</field>
+        <field name="value">https://app.runodoo.online</field>
+    </record>
+    <record id="param_trial_days" model="ir.config_parameter">
+        <field name="key">runodoo_platform.trial_days</field>
+        <field name="value">15</field>
+    </record>
+    <record id="param_grace_days" model="ir.config_parameter">
+        <field name="key">runodoo_platform.grace_days</field>
+        <field name="value">7</field>
+    </record>
+</odoo>

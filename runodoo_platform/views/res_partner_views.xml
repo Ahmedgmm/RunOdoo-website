@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_form_runodoo" model="ir.ui.view">
+        <field name="name">res.partner.form.runodoo_platform</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Hosting" name="runodoo_hosting" invisible="parent_id" groups="account.group_account_invoice">
+                    <button name="action_oh_sync" type="object" string="Refresh from platform" class="btn-secondary mb-2"/>
+                    <group>
+                        <group>
+                            <field name="oh_account_id"/>
+                            <field name="oh_login"/>
+                            <field name="oh_plan"/>
+                            <field name="oh_status"/>
+                            <field name="oh_state"/>
+                        </group>
+                        <group>
+                            <field name="oh_expires_at"/>
+                            <field name="oh_delete_after"/>
+                            <field name="oh_signup_expires"/>
+                            <field name="oh_synced_at"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

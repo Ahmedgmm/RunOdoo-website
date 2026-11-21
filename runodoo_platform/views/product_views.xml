@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_runodoo" model="ir.ui.view">
+        <field name="name">product.template.form.runodoo_platform</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Hosting plan" name="runodoo_plan">
+                    <group>
+                        <field name="oh_plan" placeholder="e.g. starter"/>
+                        <field name="oh_period" invisible="not oh_plan"/>
+                        <field name="oh_limits" invisible="not oh_plan" placeholder='{"max_projects": 3, "max_envs": 6, "allow_production": true}'/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_runodoo_plans" model="ir.actions.act_window">
+        <field name="name">Hosting plans</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('oh_plan', '!=', False)]</field>
+        <field name="context">{'default_type': 'service', 'default_oh_plan': 'starter'}</field>
+    </record>
+</odoo>

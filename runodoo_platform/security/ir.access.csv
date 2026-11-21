@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_runodoo_subscription_user,runodoo.subscription user,runodoo.subscription,account.group_account_invoice,cru,
+access_runodoo_subscription_manager,runodoo.subscription manager,runodoo.subscription,account.group_account_manager,crud,
+access_runodoo_platform_event_manager,runodoo.platform.event manager,runodoo.platform.event,account.group_account_manager,rud,
+access_runodoo_platform_event_system,runodoo.platform.event system,runodoo.platform.event,base.group_system,rud,

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_runodoo_root" name="Run Odoo" sequence="45" groups="account.group_account_invoice"
+              web_icon="runodoo_platform,static/description/icon.png"/>
+    <menuitem id="menu_runodoo_subscriptions" parent="menu_runodoo_root" action="action_runodoo_subscriptions" sequence="10"/>
+    <menuitem id="menu_runodoo_plans" parent="menu_runodoo_root" action="action_runodoo_plans" sequence="20"/>
+    <menuitem id="menu_runodoo_events" parent="menu_runodoo_root" action="action_runodoo_platform_events" sequence="30"
+              groups="account.group_account_manager"/>
+    <menuitem id="menu_runodoo_settings" parent="menu_runodoo_root" action="action_runodoo_settings" sequence="90"
+              groups="base.group_system"/>
+</odoo>

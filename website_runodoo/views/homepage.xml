@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"/>
 <header class="ro-nav">
   <div class="ro-wrap ro-nav-row">
-    <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="34" height="34"/><span>Runodoo<em>.online</em></span></a>
+    <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png?v=2" alt="" width="34" height="34"/><span>Runodoo<em>.online</em></span></a>
     <nav class="ro-nav-menu" aria-label="Main">
       <a href="#ro-who">For business</a>
       <a href="#ro-how">How it works</a>
@@ -48,7 +48,7 @@
     <div class="ro-hero-visual" aria-hidden="true">
       <i class="ro-blob ro-blob-a"></i><i class="ro-blob ro-blob-b"></i>
       <div class="ro-stage">
-        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png" alt=""/>
+        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png?v=2" alt=""/>
         <canvas id="ro-gl-hero"></canvas>
         <i class="ro-floor"></i>
       </div>
@@ -415,7 +415,7 @@
           </div>
           <div class="ro-dviz">
             <div class="ro-srv">
-              <div class="ro-sv"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="28" height="28"/><b>runodoo</b><span>control</span></div>
+              <div class="ro-sv"><img src="/website_runodoo/static/src/img/runodoo-mark.png?v=2" alt="" width="28" height="28"/><b>runodoo</b><span>control</span></div>
               <div class="ro-sv-link"><i></i></div>
               <div class="ro-sv"><b>your-server</b><span>ubuntu · ssh</span><div class="ro-bars"><i></i><i></i><i></i></div></div>
             </div>
@@ -479,7 +479,7 @@
         </div>
       </div>
       <div class="ro-final-stage" aria-hidden="true">
-        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png" alt=""/>
+        <img class="ro-stage-fallback" src="/website_runodoo/static/src/img/runodoo-mark.png?v=2" alt=""/>
         <canvas id="ro-gl-final"></canvas>
       </div>
     </div>
@@ -491,7 +491,7 @@
 <footer class="ro-foot">
   <div class="ro-wrap ro-foot-grid">
     <div class="ro-foot-brand">
-      <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png" alt="" width="30" height="30"/><span>Runodoo<em>.online</em></span></a>
+      <a class="ro-brand" href="#ro-top"><img src="/website_runodoo/static/src/img/runodoo-mark.png?v=2" alt="" width="30" height="30"/><span>Runodoo<em>.online</em></span></a>
       <p>Odoo hosting, looked after.</p>
     </div>
     <div><h4>Product</h4><a href="#ro-how">How it works</a><a href="#ro-peace">Backups &amp; safety</a><a href="#ro-dev">For developers</a></div>

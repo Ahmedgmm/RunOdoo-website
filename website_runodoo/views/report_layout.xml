@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- "Runodoo" document layout: logo + company block, a brand gradient rule, recipient on the left and the
+         document title on the right, a quiet footer with the page number. Tables (not flex): wkhtmltopdf. -->
+    <template id="external_layout_runodoo">
+        <div t-attf-class="header o_company_#{company.id}_layout ro-header">
+            <table class="ro-head-table">
+                <tr>
+                    <td class="ro-head-logo">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                    </td>
+                    <td class="ro-head-company">
+                        <div class="ro-co-name" t-out="company.name"/>
+                        <t t-if="not company.is_company_details_empty">
+                            <div class="ro-co-details" t-field="company.company_details"/>
+                        </t>
+                        <t t-else="">
+                            <div class="ro-co-details">
+                                <span t-field="company.partner_id"
+                                      t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                                <div t-if="company.email or company.website">
+                                    <span t-if="company.website" t-out="(company.website or '').replace('https://', '').replace('http://', '')"/>
+                                    <span t-if="company.website and company.email"> · </span>
+                                    <span t-if="company.email" t-out="company.email"/>
+                                </div>
+                                <div t-if="company.phone" t-out="company.phone"/>
+                            </div>
+                        </t>
+                        <div class="ro-co-details" t-if="forced_vat or company.vat">
+                            <span t-field="company.country_id.vat_label">Tax ID</span>:
+                            <span t-out="forced_vat or company.vat"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="ro-rule"/>
+        </div>
+
+        <div t-attf-class="article o_company_#{company.id}_layout o_report_layout_standard o_table_standard ro-doc"
+             t-att-data-oe-model="o and o._name"
+             t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <!-- Needed to split a multi-invoice PDF: the heading tag identifies each document. -->
+            <h3 t-if="report_type == 'pdf'" t-out="layout_document_title or ' '" class="opacity-0 mb-0 h-0"/>
+            <table class="ro-top">
+                <tr>
+                    <td class="ro-top-address">
+                        <t t-if="address and not hide_recipient_address">
+                            <div class="ro-label" t-if="o and o._name == 'account.move' and o.move_type in ('out_invoice', 'out_refund')">Bill to</div>
+                            <div class="ro-address"><t t-out="address"/></div>
+                            <t t-if="information_block" t-out="information_block"/>
+                        </t>
+                    </td>
+                    <td class="ro-top-title">
+                        <div t-if="not hide_title and layout_document_title" class="ro-title" t-out="layout_document_title"/>
+                    </td>
+                </tr>
+            </table>
+            <t t-out="0"/>
+        </div>
+
+        <div t-attf-class="footer o_company_#{company.id}_layout ro-footer">
+            <table class="ro-foot-table">
+                <tr>
+                    <td class="ro-foot-text">
+                        <div t-if="not is_html_empty(company.report_footer)" t-field="company.report_footer"/>
+                        <div t-else="" t-out="company.name"/>
+                    </td>
+                    <td class="ro-foot-pager">
+                        <span t-if="report_type == 'pdf'">Page <span class="page"/> of <span class="topage"/></span>
+                        <span t-if="is_preview">Page 1 of 1</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <record id="report_layout_runodoo" model="report.layout">
+        <field name="name">Runodoo</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="website_runodoo.external_layout_runodoo"/>
+    </record>
+
+    <!-- Invoice body: clearer labels, the amount due (or a Paid mark) next to the dates. -->
+    <template id="report_invoice_document_runodoo" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@name='origin']/strong" position="replace">
+            <strong>Subscription</strong>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="class" add="ro-info" separator=" "/>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div class="col ro-info-due" name="ro_amount_due"
+                 t-if="o.move_type in ('out_invoice', 'out_refund') and o.state == 'posted'">
+                <t t-if="o.payment_state in ('paid', 'in_payment', 'reversed')">
+                    <strong>Status</strong>
+                    <div><span class="ro-badge ro-badge-paid" t-out="'Reversed' if o.payment_state == 'reversed' else 'Paid'"/></div>
+                </t>
+                <t t-else="">
+                    <strong t-out="'Amount Due' if o.move_type == 'out_invoice' else 'Amount to Refund'"/>
+                    <div class="ro-due-amount" t-field="o.amount_residual"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,139 @@
+// "Runodoo" document layout (views/report_layout.xml). wkhtmltopdf (old WebKit): tables, no flex/grid,
+// -webkit- prefixed gradients.
+$ro-ink: #0b3558;
+$ro-text: #2b3a4a;
+$ro-muted: #6b7a8c;
+$ro-line: #e3e8ef;
+$ro-cloud: #f5f7fa;
+$ro-blue: #006bff;
+
+.ro-header {
+    font-size: 9.5pt;
+    color: $ro-muted;
+
+    .ro-head-table { width: 100%; border-collapse: collapse; }
+    td { vertical-align: middle; padding: 0; border: 0; }
+    .ro-head-logo { width: 50%; }
+    .ro-head-logo img { max-height: 64px; max-width: 230px; }
+    .ro-head-company { text-align: right; line-height: 1.45; }
+    .ro-co-name { color: $ro-ink; font-weight: 700; font-size: 11.5pt; margin-bottom: 2px; }
+    .ro-co-details, .ro-co-details address { margin: 0; }
+    .ro-co-details p { margin: 0; }
+
+    .ro-rule {
+        height: 3px;
+        margin-top: 12px;
+        border-radius: 2px;
+        background: #7fe0d6;
+        background: -webkit-linear-gradient(left, #7fe7c8 0%, #5cc8e8 35%, #8aa2ee 70%, #b58ae9 100%);
+        background: linear-gradient(to right, #7fe7c8 0%, #5cc8e8 35%, #8aa2ee 70%, #b58ae9 100%);
+    }
+}
+
+.ro-doc {
+    color: $ro-text;
+    font-size: 10pt;
+
+    .ro-top { width: 100%; margin: 6px 0 22px; border-collapse: collapse; }
+    .ro-top > tbody > tr > td, .ro-top > tr > td { vertical-align: top; padding: 0; border: 0; }
+    .ro-top-address { width: 50%; }
+    .ro-top-title { text-align: right; }
+    .ro-label {
+        color: $ro-muted;
+        font-size: 8pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-bottom: 4px;
+    }
+    .ro-address { color: $ro-ink; line-height: 1.45; }
+    .ro-address address { margin-bottom: 0; }
+    .ro-address div[itemprop="name"], .ro-address span[itemprop="name"] { font-weight: 700; }
+    .ro-title { color: $ro-ink; font-size: 20pt; font-weight: 700; line-height: 1.15; }
+    .ro-title span + span { display: block; color: $ro-muted; font-size: 11pt; font-weight: 400; margin-top: 4px; }
+
+    // Dates / subscription / amount due: one soft card
+    #informations.ro-info {
+        background: $ro-cloud;
+        border: 1px solid $ro-line;
+        border-radius: 6px;
+        margin: 0 0 22px 0 !important;
+        padding: 10px 4px;
+        strong {
+            display: block;
+            color: $ro-muted;
+            font-size: 7.5pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+        div { color: $ro-ink; }
+    }
+    .ro-info-due { text-align: right; }
+    .ro-due-amount { font-weight: 700; font-size: 11pt; }
+    .ro-badge {
+        display: inline-block;
+        padding: 1px 9px;
+        border-radius: 10px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .8px;
+    }
+    .ro-badge-paid { background: #e3f6ec; color: #17804a; }
+
+    // Lines table
+    table.o_main_table {
+        thead tr th {
+            background: $ro-ink !important;
+            color: #fff !important;
+            border: 0 !important;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            padding: 8px 10px !important;
+        }
+        thead tr th:first-child { border-radius: 5px 0 0 5px; }
+        thead tr th:last-child { border-radius: 0 5px 5px 0; }
+        tbody td {
+            border: 0 !important;
+            border-bottom: 1px solid $ro-line !important;
+            padding: 10px !important;
+            vertical-align: top;
+        }
+        tbody td[name="account_invoice_line_name"] span { color: $ro-ink; }
+        tr.o_line_section td { background: $ro-cloud; color: $ro-ink; }
+    }
+
+    // Totals
+    #total table.o_total_table {
+        min-width: 260px;
+        margin-top: 10px;
+        td { border: 0 !important; padding: 5px 10px !important; }
+        tr.o_subtotal td, tr.o_taxes td { color: $ro-muted; }
+        tr.o_total td {
+            background: $ro-ink !important;
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 11.5pt;
+            padding: 9px 10px !important;
+        }
+        tr.o_total td:first-child { border-radius: 5px 0 0 5px; }
+        tr.o_total td:last-child { border-radius: 0 5px 5px 0; }
+        tr.o_total td strong, tr.o_total td span { color: #fff !important; }
+    }
+
+    #payment_term { color: $ro-muted; font-size: 9pt; }
+    #payment_term b, #payment_term strong { color: $ro-ink; }
+}
+
+.ro-footer {
+    font-size: 8.5pt;
+    color: $ro-muted;
+    .ro-foot-table { width: 100%; border-collapse: collapse; border-top: 1px solid $ro-line; }
+    td { padding: 8px 0 0; border: 0; vertical-align: top; }
+    .ro-foot-text p { margin: 0; }
+    .ro-foot-pager { text-align: right; white-space: nowrap; width: 25%; }
+}

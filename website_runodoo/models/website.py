@@ -3,6 +3,7 @@ from odoo.tools import BinaryBytes, file_open
 
 FAVICON = 'website_runodoo/static/src/img/favicon.png'
 LOGO = 'website_runodoo/static/src/img/runodoo-logo.png'
+REPORT_BRANDING = '1'   # bump to re-apply _runodoo_apply_report_branding on the next upgrade
 
 
 class Website(models.Model):
@@ -27,6 +28,34 @@ class Website(models.Model):
             'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
             'auth_signup_uninvited': 'b2c',   # free sign-up on /web/signup: the trial starts there
         })
+        self._runodoo_apply_report_branding(website.company_id, logo)
+
+    @api.model
+    def _runodoo_apply_report_branding(self, company, logo):
+        """Invoices / documents: Runodoo logo, layout and colours on the website's company.
+
+        Applied once per REPORT_BRANDING version (a config parameter remembers it), so later changes made in
+        Settings → Document Layout survive module upgrades. Name/website/footer only fill blanks or defaults.
+        """
+        icp = self.env['ir.config_parameter'].sudo()
+        if not company or icp.get_str('website_runodoo.report_branding') == REPORT_BRANDING:
+            return
+        vals = {
+            'logo': BinaryBytes(logo, filename='runodoo-logo.png'),
+            'external_report_layout_id': self.env.ref('website_runodoo.external_layout_runodoo').id,
+            'primary_color': '#0b3558',
+            'secondary_color': '#006bff',
+            'report_tables_id': 'light',
+        }
+        if company.name in (False, '', 'My Company'):
+            vals['name'] = 'Runodoo'
+        if not company.website:
+            vals['website'] = 'https://www.runodoo.online'
+        if not company.report_footer or not str(company.report_footer).strip():
+            vals['report_footer'] = ('Thank you for hosting with Runodoo. '
+                                     'Questions about this invoice? www.runodoo.online/contactus')
+        company.write(vals)
+        icp.set_str('website_runodoo.report_branding', REPORT_BRANDING)
 
     def _runodoo_pricing(self):
         """Hosting plans for /pricing and the homepage, straight from the plan products (runodoo_platform): one card
